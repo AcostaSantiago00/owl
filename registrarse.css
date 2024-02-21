@@ -1,0 +1,81 @@
+/* Estilos generales, similares a las otras páginas */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8ecd1; /* Color vainilla claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos del contenedor de registro */
+.register-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los grupos de formulario y campos de entrada, similares a login.css */
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-control {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Estilos del botón de registro */
+.btn-primary {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #555;
+}
+
+/* Estilos para el enlace de inicio de sesión */
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-link a {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Media Queries para pantallas más pequeñas */
+@media (max-width: 600px) {
+    .register-container {
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+}

@@ -1,0 +1,57 @@
+/* Estilos generales, similares a las otras páginas */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8ecd1; /* Color vainilla claro */
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos del contenedor de administración */
+.admin-container {
+    width: 90%;
+    max-width: 1200px; /* Ancho máximo para el contenedor */
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+/* Estilos para la navegación */
+.admin-nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.admin-nav li {
+    display: inline; /* O puedes usar 'inline-block' si prefieres */
+    margin-right: 20px;
+}
+
+.admin-nav a {
+    text-decoration: none;
+    color: #0056b3;
+}
+
+.admin-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para las secciones */
+section {
+    margin-top: 20px;
+}
+
+/* Puedes añadir estilos adicionales para formularios, tablas, botones, etc. */
+
+/* Media Queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .admin-nav li {
+        display: block; /* Cambia a un diseño de bloque en pantallas más pequeñas */
+        margin-bottom: 10px;
+    }
+}

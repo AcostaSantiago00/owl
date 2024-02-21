@@ -1,0 +1,136 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8ecd1; /* Color de fondo vainilla claro */
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+/* Estilos para las secciones */
+section {
+    margin-bottom: 20px;
+}
+
+/*
+/* Estilos específicos para cada sección */
+.dashboard, .cursos-inscritos, .material-estudio, .foros-discusion, .calificaciones, .ayuda-soporte, .configuracion-cuenta {
+    /* Puedes añadir estilos específicos para cada sección aquí */
+}
+
+/* Estilos para listas, cuadrículas, y widgets */
+.lista-cursos, .recursos, .lista-foros, .resumen-calificaciones, .recursos-ayuda, .opciones-configuracion {
+    /* Estilos para organizar los elementos internos de cada sección */
+}
+
+
+/* Media Queries para adaptabilidad en dispositivos móviles */
+@media (max-width: 768px) {
+    .dashboard-container {
+        width: calc(100% - 20px);
+    }
+
+    /* Aquí puedes añadir ajustes adicionales para una mejor visualización en dispositivos móviles */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333; /* O el color que prefieras */
+    color: white;
+    padding: 10px 20px;
+}
+
+.navbar-brand {
+    font-size: 24px;
+}
+
+.navbar-controls {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #5cb85c; /* O el color que prefieras */
+}
+
+.nav-link:hover {
+    background-color: #4cae4c; /* Un tono más oscuro para el efecto hover */
+}
+
+#logout-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #d9534f; /* O el color que prefieras */
+    color: white;
+    cursor: pointer;
+}
+
+#logout-button:hover {
+    background-color: #c9302c; /* Un tono más oscuro para el efecto hover */
+}
+
+
+/* Estilos para la barra de búsqueda */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px; /* Bordes redondeados solo en el lado izquierdo */
+    width: 250px; /* Puedes ajustar esto según tus necesidades */
+}
+
+#search-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0 4px 4px 0; /* Bordes redondeados solo en el lado derecho */
+    background-color: #5cb85c; /* Un color que indica 'ir' o 'buscar' */
+    color: white;
+    cursor: pointer;
+}
+
+#search-button:hover {
+    background-color: #4cae4c; /* Un tono más oscuro para el efecto hover */
+}
+
+.mensaje-no-inscripcion {
+    display: none; /* Inicialmente oculto */
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #666;
+}
+
+/* Cuando el mensaje se hace visible (mediante JavaScript o backend) */
+.mensaje-no-inscripcion.visible {
+    display: block;
+}

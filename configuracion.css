@@ -1,0 +1,83 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333; /* O el color que prefieras */
+    color: white;
+    padding: 10px 20px;
+}
+
+.navbar-brand {
+    font-size: 24px;
+}
+
+.navbar-controls {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #5cb85c; /* O el color que prefieras */
+}
+
+.nav-link:hover {
+    background-color: #4cae4c; /* Un tono más oscuro para el efecto hover */
+}
+
+#logout-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #d9534f; /* O el color que prefieras */
+    color: white;
+    cursor: pointer;
+}
+
+#logout-button:hover {
+    background-color: #c9302c; /* Un tono más oscuro para el efecto hover */
+}
+
+.config-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.config-container h1, .config-container h2 {
+    color: #333;
+}
+
+/* Estilos para los formularios y campos de entrada */
+form {
+    margin-top: 15px;
+}
+
+form input[type="text"], form input[type="password"], form input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #45a049;
+}

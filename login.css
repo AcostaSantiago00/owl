@@ -1,0 +1,66 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8ecd1; /* Color vainilla claro */
+    color: #333; /* Color gris oscuro para el texto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Estilos del contenedor principal */
+.login-container {
+    background-color: #ffffff; /* Blanco para el fondo del contenedor */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilos del título */
+#login-title {
+    text-align: center;
+    color: #333; /* Gris oscuro para el título */
+}
+
+/* Estilos de los grupos de formulario */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Estilos de los campos de entrada */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; /* Gris claro para los bordes */
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Estilos del botón de inicio de sesión */
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333; /* Gris oscuro para el botón */
+    color: white;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #555; /* Un tono más claro para el hover */
+}
+
+/* Estilos de los enlaces de ayuda */
+.link {
+    display: block;
+    text-align: center;
+    color: #0066cc; /* Mantenemos un color azul para los enlaces por convención */
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
