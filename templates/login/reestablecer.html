@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperación de Contraseña - OWL</title>
+    <link rel="stylesheet" href="../../static/styles/reestablecer.css"> <!-- Asegúrate de vincular tu archivo CSS -->
+</head>
+
+<body>
+    <div class="password-recovery-container">
+        <h1>Recuperar Contraseña</h1>
+
+        <div class="instrucciones-seguridad">
+            <p>
+                Para recuperar su contraseña, por favor responda las siguientes preguntas de seguridad. Estas preguntas
+                son las que seleccionó y respondió durante el proceso de registro. Sus respuestas deben coincidir
+                exactamente con las que proporcionó anteriormente para verificar su identidad y proceder con la
+                recuperación de su cuenta.
+            </p>
+            <p><strong>Por favor, tenga en cuenta:</strong></p>
+            <ul>
+                <li>Las respuestas a las preguntas de seguridad son sensibles a mayúsculas y minúsculas.</li>
+                <li>Debe recordar las respuestas exactas que ingresó al momento de su registro.</li>
+                <li>Si tiene problemas para recordar sus respuestas, no podremos recuperar su cuenta a través de este
+                    método.</li>
+            </ul>
+        </div>
+
+        <form id="recover-form" action="/ruta_para_registro" method="post">
+            <div class="form-group">
+                <label for="username">Nombre de Usuario:</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <table class="preguntas-seguridad">
+                <tr>
+                    <td><label for="pregunta1">¿Cuál es el nombre de tu primera mascota?</label></td>
+                    <td><input type="text" id="pregunta1" name="respuesta1"></td>
+                </tr>
+                <tr>
+                    <td><label for="pregunta2">¿Cuál es tu película favorita?</label></td>
+                    <td><input type="text" id="pregunta2" name="respuesta2"></td>
+                </tr>
+                <tr>
+                    <td><label for="pregunta3">¿En qué ciudad naciste?</label></td>
+                    <td><input type="text" id="pregunta3" name="respuesta3"></td>
+                </tr>
+            </table>
+
+            <span id="security-questions-error" class="error">Por favor, responde todas las preguntas de seguridad.</span>
+
+            <div class="form-group">
+                <input type="submit" value="Confirmar" class="btn btn-primary">
+            </div>
+        </form>
+
+        <a href="{{ url_for('home') }}" class="link">Volver al inicio de sesión</a>
+    </div>
+
+    <script src="../../static/js/reestablecer.js"></script>
+</body>
+
+</html>

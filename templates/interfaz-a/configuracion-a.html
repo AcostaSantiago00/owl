@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Configuración de Cuenta - OWL</title>
-    <link rel="stylesheet" href="configuracion.css"> <!-- Vincula tu archivo CSS aquí -->
+    <link rel="stylesheet" href="configuracion-a.css"> <!-- Vincula tu archivo CSS aquí -->
 </head>
 <body>
     <div class="config-container">
@@ -20,9 +20,13 @@
         <section class="personal-info">
             <h2>Información Personal</h2>
             <form action="/ruta_para_actualizar_info" method="post">
+                <img class="profile-pic" src="perfil.jpg" alt="foto">
+                <input type="file" class="inputFile hidden" accept="image/jpeg, image/png, image/jpg"/>
                 <input type="text" name="fullname" placeholder="Nombre Completo">
                 <input type="email" name="email" placeholder="Correo Electrónico">
-                <input type="submit" value="Actualizar Información">
+                <div>
+                    <input type="submit" value="Actualizar Información">
+                </div>
             </form>
         </section>
 
@@ -33,7 +37,9 @@
                 <input type="password" name="current-password" placeholder="Contraseña Actual" required>
                 <input type="password" name="new-password" placeholder="Nueva Contraseña" required>
                 <input type="password" name="confirm-new-password" placeholder="Confirmar Nueva Contraseña" required>
-                <input type="submit" value="Actualizar Contraseña">
+                <div>
+                    <input type="submit" value="Actualizar Contraseña">
+                </div>
             </form>
         </section>
     </div>

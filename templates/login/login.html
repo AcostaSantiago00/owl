@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión en OWL</title>
-    <link rel="stylesheet" href="login.css"> <!-- Vinculación del archivo CSS -->
-    <!-- Agrega aquí tus estilos CSS o referencias externas -->
+    <link rel="stylesheet" href="../../static/styles/login.css"> 
 </head>
 <body>
     <div class="login-container">
@@ -23,10 +22,11 @@
                 <input type="submit" value="Iniciar Sesión" class="btn btn-primary">
             </div>
             <div class="links">
-                <a href="/ruta_para_recuperar_contraseña" class="link">¿Olvidaste tu contraseña?</a>
-                <a href="/ruta_para_registrarse" class="link">Registrarse</a>
+                <a href="{{ url_for('reestablecer') }}" class="link">¿Olvidaste tu contraseña?</a>
+                <a href="{{ url_for('registrarse') }}" class="link">Registrarse</a>
             </div>
         </form>
     </div>
+    <script src="login.js"></script>
 </body>
 </html>

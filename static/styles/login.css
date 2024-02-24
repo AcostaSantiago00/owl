@@ -1,7 +1,7 @@
 /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8ecd1; /* Color vainilla claro */
+    background-color: #ffffff;
     color: #333; /* Color gris oscuro para el texto */
     display: flex;
     justify-content: center;
@@ -37,26 +37,30 @@ body {
     box-sizing: border-box;
 }
 
+input[type='text'], input[type='password'] {
+    border: 1px solid rgba(59, 130, 246, .5);
+}
+
 /* Estilos del botón de inicio de sesión */
 .btn-primary {
     width: 100%;
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #333; /* Gris oscuro para el botón */
+    background-color: rgb(59 130 246 / .5);
     color: white;
     cursor: pointer;
 }
 
 .btn-primary:hover {
-    background-color: #555; /* Un tono más claro para el hover */
+    background-color: rgba(109, 160, 246, .5); /* Un tono más claro para el hover */
 }
 
 /* Estilos de los enlaces de ayuda */
 .link {
     display: block;
     text-align: center;
-    color: #0066cc; /* Mantenemos un color azul para los enlaces por convención */
+    color: #0066cc;
     text-decoration: none;
     margin-top: 10px;
 }

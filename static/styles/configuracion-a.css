@@ -1,3 +1,10 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8ecd1; /* Color de fondo vainilla claro */
+    margin: 0;
+    padding: 0;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -44,7 +51,7 @@
 
 .config-container {
     width: 90%;
-    max-width: 800px;
+    max-width: 600px;
     margin: 20px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -56,17 +63,42 @@
     color: #333;
 }
 
+.profile-pic {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px; /* O el tamaño que prefieras */
+    height: 100px; /* Asegúrate de que sea el mismo que el ancho para un círculo perfecto */
+    border-radius: 50%;
+    border: 2px solid #ccc; /* Opcional: un borde para la foto de perfil */
+    margin-bottom: 15px; /* Espacio debajo de la imagen */
+}
+
+.inputFile {
+    display: block;
+    margin: 0 auto;
+}
+
 /* Estilos para los formularios y campos de entrada */
 form {
+    text-align: center;
     margin-top: 15px;
 }
 
+form input{
+    text-align: center;
+}
+
 form input[type="text"], form input[type="password"], form input[type="email"] {
-    width: 100%;
+    width: 50%;
     padding: 8px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+form div{
+    text-align: center;
 }
 
 form input[type="submit"] {
@@ -80,4 +112,8 @@ form input[type="submit"] {
 
 form input[type="submit"]:hover {
     background-color: #45a049;
+}
+
+h2{
+    text-align: center;
 }
