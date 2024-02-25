@@ -1,7 +1,21 @@
+function validarUsuario(user, event) {
+    var usuarioError = document.getElementById('username-error'); // Asegúrate de que este ID exista en tu HTML
+
+    if(user.trim() === '') {
+        document.getElementById('username').classList.add('input-error'); // Cambia 'email' por 'username'
+        usuarioError.textContent = 'Este campo es obligatorio.';
+        usuarioError.classList.add('error-active');
+        event.preventDefault();
+    } else {
+        document.getElementById('username').classList.remove('input-error');
+        usuarioError.classList.remove('error-active');
+    }
+}
+
 function validarEmail(email, emailError, emailRegex, event) {
-    if (email.trim() === '') {
+    if (email.trim() === ''){
         document.getElementById('email').classList.add('input-error');
-        emailError.textContent = 'El campo de correo electrónico es obligatorio.';
+        emailError.textContent = 'Este campo es obligatorio.';
         emailError.classList.add('error-active');
         event.preventDefault(); // Previene el envío del formulario
     }
@@ -15,7 +29,6 @@ function validarEmail(email, emailError, emailRegex, event) {
         emailError.classList.remove('error-active');
     }
 }
-
 
 function validarPassword(password, confirmPassword, passwordError, event){
     // Verificación de longitud de la contraseña
@@ -72,16 +85,17 @@ function validarPreguntasDeSeguridad(campos, event) {
 }
 
 document.getElementById('register-form').addEventListener('submit', function(event) {
+    var user = document.getElementById('username').value;
+    validarUsuario(user, event);
+
     var email = document.getElementById('email').value;
     var emailError = document.getElementById('email-error');
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar correo electrónico
-
     validarEmail(email, emailError, emailRegex, event);
 
     var password = document.getElementById('password').value;
     var confirmPassword = document.getElementById('confirm-password').value;
     var passwordError = document.getElementById('password-error');
-
     validarPassword(password, confirmPassword, passwordError, event);
 
     var campos = [
