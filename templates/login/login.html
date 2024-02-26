@@ -9,7 +9,7 @@
 <body>
     <div class="login-container">
         <h1 id="login-title">Bienvenido a OWL</h1>
-        <form id="login-form" action="/ruta_de_tu_servidor" method="post">
+        <form id="login-form" action="{{ url_for('login') }}" method="post">
             <div class="form-group">
                 <label for="username">Nombre de Usuario:</label>
                 <input type="text" id="username" name="username" class="form-control">

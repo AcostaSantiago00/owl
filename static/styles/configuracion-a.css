@@ -117,3 +117,12 @@ form input[type="submit"]:hover {
 h2{
     text-align: center;
 }
+
+.error {
+    color: red;
+    display: none;
+}
+
+.error-active {
+    display: block;
+}

@@ -1,7 +1,7 @@
 function validarUsuario(user, event) {
     var usuarioError = document.getElementById('username-error'); // Asegúrate de que este ID exista en tu HTML
 
-    if(user.trim() === '') {
+    if (user.trim() === '') {
         document.getElementById('username').classList.add('input-error'); // Cambia 'email' por 'username'
         usuarioError.textContent = 'Este campo es obligatorio.';
         usuarioError.classList.add('error-active');
@@ -12,27 +12,9 @@ function validarUsuario(user, event) {
     }
 }
 
-function validarEmail(email, emailError, emailRegex, event) {
-    if (email.trim() === ''){
-        document.getElementById('email').classList.add('input-error');
-        emailError.textContent = 'Este campo es obligatorio.';
-        emailError.classList.add('error-active');
-        event.preventDefault(); // Previene el envío del formulario
-    }
-    // Verificación de formato de correo electrónico
-    else if (!emailRegex.test(email)) {
-        emailError.textContent = 'Debe ser un correo electrónico válido.';
-        emailError.classList.add('error-active');
-        event.preventDefault();
-    }
-    else {
-        emailError.classList.remove('error-active');
-    }
-}
-
-function validarPassword(password, confirmPassword, passwordError, event){
+function validarPassword(password, confirmPassword, passwordError, event) {
     // Verificación de longitud de la contraseña
-    if (password === '' && confirmPassword === ''){
+    if (password === '' && confirmPassword === '') {
         passwordError.textContent = 'Este campo es obligatorio.';
         passwordError.classList.add('error-active');
         event.preventDefault();
@@ -47,7 +29,7 @@ function validarPassword(password, confirmPassword, passwordError, event){
         passwordError.textContent = 'Las contraseñas deben coincidir.';
         passwordError.classList.add('error-active');
         event.preventDefault();
-    } 
+    }
     else {
         passwordError.classList.remove('error-active');
     }
@@ -70,7 +52,7 @@ function validarPreguntasDeSeguridad(campos, event) {
     var todasRespondidas = true;
     var securityQuestionsError = document.getElementById('security-questions-error');
 
-    campos.forEach(function(campo) {
+    campos.forEach(function (campo) {
         if (campo.value.trim() === '') {
             todasRespondidas = false;
         }
@@ -79,19 +61,16 @@ function validarPreguntasDeSeguridad(campos, event) {
     if (!todasRespondidas) {
         securityQuestionsError.classList.add('error-active');
         event.preventDefault();
-    }else{
+    } else {
         securityQuestionsError.classList.remove('error-active');
     }
 }
 
-document.getElementById('register-form').addEventListener('submit', function(event) {
+document.getElementById('register-form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Esto debe ir al principio para prevenir el envío del formulario
+
     var user = document.getElementById('username').value;
     validarUsuario(user, event);
-
-    var email = document.getElementById('email').value;
-    var emailError = document.getElementById('email-error');
-    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar correo electrónico
-    validarEmail(email, emailError, emailRegex, event);
 
     var password = document.getElementById('password').value;
     var confirmPassword = document.getElementById('confirm-password').value;
@@ -106,4 +85,29 @@ document.getElementById('register-form').addEventListener('submit', function(eve
     validarPreguntasDeSeguridad(campos, event);
 
     validarRol(event);
+
+    //petición AJAX
+    var xhr = new XMLHttpRequest(); //objeto que interactua con servidor, y envia/recibe datos de forma asincronica.
+    xhr.open("POST", "/registrarse", true); //tipo de peticion enviada (POST), donde se envia (/registrar), especificando que debe ser asincronica (true)
+    xhr.setRequestHeader('Content-Type', 'application/json'); //formato de la peticion
+    xhr.send(JSON.stringify({ username: user /*, otros datos */ }));
+
+    // Manejar la respuesta del servidor
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            var usernameErrorElement = document.getElementById('username-error');
+            if (response.usernameExists) { //si la rta indica que el nombre de usuario ya existe
+                usernameErrorElement.textContent = 'El nombre de usuario ya existe.';
+                usernameErrorElement.classList.add('error-active'); // Añade la clase para mostrar el error
+            } else if (response.error) {
+                // Aquí puedes manejar otros errores
+                // y usar una lógica similar para mostrar mensajes de error
+            } else if (response.registered) {
+                window.location.href = '/home'; // Redirigir a la página de inicio
+            } else {
+                usernameErrorElement.classList.remove('error-active'); // Si no hay errores, a la clase de error
+            }
+        }
+    }
 });
