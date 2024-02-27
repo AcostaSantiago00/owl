@@ -9,7 +9,7 @@ flash: mostrar mensajes temporales al usuario
 url_for: generar URLs para una funcion especifica
 """
 from _mysql_db import(
-  iniciar_sesion, obtener_conexion, usuario_existe, registrar_usuario
+  iniciar_sesion, obtener_conexion, usuario_existe, registrar_usuario, reestablecer_usuario
 ) #importa funcion del modulo personalizado
 
 from werkzeug.utils import secure_filename #para asegurar un nombre de arch que no afecte al sistema de archivos del servidor
@@ -23,51 +23,58 @@ def route(app): #toma objeto de app flask como argumento
   @app.route("/login", methods=["GET", "POST"]) 
   def login(): #sera llamada cuando se acceda a la ruta /login
       if request.method == "POST": #si el usuario mando un formulario
-        username = request.form.get('username')
-        password = request.form.get('password')
+        username = request.json.get('username')
+        password = request.json.get('password')
 
-        user = iniciar_sesion(username, password) #verifica el usuario
-        if user != -1: #inicio de sesion exitoso
-          session['user'] = user #almacena al usuario en la sesion 
-          if user[3] == 'alumno':
-            return redirect(url_for('interfaz_alumno'))
-          elif user[3] == 'profesor':
-            return redirect(url_for('interfaz_profesor'))
+        res = iniciar_sesion(username, password) #verifica el usuario
+        if res != None: #inicio de sesion exitoso
+          session['user'] = res #almacena al usuario en la sesion 
+          if res['rol'] == 'alumno':
+            return jsonify({'role': 'alumno'})
+          elif res['rol'] == 'profesor':
+            return jsonify({'role': 'profesor'})
         else:
-          return redirect(url_for('home')) #de vuelta al inicio de sesion
+          return jsonify({'role': 'null'}) #de vuelta al inicio de sesion
   
-  @app.route('/reestablecer')
-  def reestablecer():
-    return render_template('login/reestablecer.html')
-  
-  @app.route('/registrarse', methods=['GET', 'POST'])
+  @app.route("/registrarse", methods=['GET', 'POST'])
   def registrarse():
     if request.method == 'POST':
       username = request.json.get('username')
       password = request.json.get('password')
-      confirm_password = request.json.get('confirm-password')
-      rol = request.json.get('rol')
+      confirm_password = request.json.get('confirm_password')
+      rol = request.json.get('tipo_rol')
       respuesta1 = request.json.get('respuesta1')
       respuesta2 = request.json.get('respuesta2')
       respuesta3 = request.json.get('respuesta3')
       
       if password != confirm_password: #verifica que coincidan
-        return jsonify({'error': 'Las contraseñas no coinciden'})
+        return jsonify({'error': 'Las contraseñas deben coincidir'})
 
-      print("hola")
       if usuario_existe(username):
         return jsonify({'usernameExists': True}) #nombre de usuario ya existente
       else:
             if registrar_usuario(username, password, rol, respuesta1, respuesta2, respuesta3):
-              print("hola")
               return jsonify({'registered': True}) #registro exitoso
             else:
-              print("chau")
               return jsonify({'usernameExists': False}) #error en registro
     else:
       return render_template('login/registrarse.html')
+    
+  @app.route("/reestablecer", methods=['GET', 'POST'])
+  def reestablecer():
+    if request.method == 'POST':
+      username = request.json.get('username')
+      respuesta1 = request.json.get('respuesta1')
+      respuesta2 = request.json.get('respuesta2')
+      respuesta3 = request.json.get('respuesta3')
+      
+      if reestablecer_usuario(username, respuesta1, respuesta2, respuesta3):
+        return jsonify({'respuesta': True})
+      else:
+        return jsonify({'respuesta': False})
+    else:
+      return render_template('login/reestablecer.html')
 
-#hasta aca.
   @app.route("/interfaz_alumno")
   def interfaz_alumno():
     if 'user' not in session: # Asegura de que el usuario esté autenticado antes de mostrar la página de inicio

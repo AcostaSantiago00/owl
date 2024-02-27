@@ -28,7 +28,7 @@
             </ul>
         </div>
 
-        <form id="recover-form" action="/ruta_para_registro" method="post">
+        <form id="recover-form" method="post">
             <div class="form-group">
                 <label for="username">Nombre de Usuario:</label>
                 <input type="text" id="username" name="username" class="form-control">
@@ -48,8 +48,7 @@
                     <td><input type="text" id="pregunta3" name="respuesta3"></td>
                 </tr>
             </table>
-
-            <span id="security-questions-error" class="error">Por favor, responde todas las preguntas de seguridad.</span>
+            <span id="security-questions-error" class="error"></span>
 
             <div class="form-group">
                 <input type="submit" value="Confirmar" class="btn btn-primary">

@@ -68,3 +68,12 @@ input[type='text'], input[type='password'] {
 .link:hover {
     text-decoration: underline;
 }
+
+.error {
+    color: red;
+    display: none;
+}
+
+.error-active {
+    display: block;
+}
