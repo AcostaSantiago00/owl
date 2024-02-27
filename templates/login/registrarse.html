@@ -16,9 +16,7 @@
             <div class="form-group">
                 <label for="username">Nombre de Usuario:</label>
                 <input type="text" id="username" name="username" class="form-control">
-                {% if error_username %}
-                <div class="server-error">{{ error_username }}</div>
-                {% endif %}
+                <div class="server-error"></div>
                 <span id="username-error" class="error"></span>
             </div>
 
@@ -55,7 +53,7 @@
                     <td><input type="text" id="pregunta3" name="respuesta3"></td>
                 </tr>
             </table>
-            <span id="security-questions-error" class="error">Por favor, responde todas las preguntas de seguridad.</span>
+            <span id="security-questions-error" class="error"></span>
 
             <p>Recuerde: Si olvida estas respuestas, no podra recuperar su cuenta, ya que son una parte crucial de nuestro proceso de verificación de identidad.</p>
 

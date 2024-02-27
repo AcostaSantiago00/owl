@@ -1,10 +1,10 @@
-function validarUsuario(user, event) {
+function validarUsuario(user) {
     var usuarioError = document.getElementById('username-error'); // Asegúrate de que este ID exista en tu HTML
 
     if (user.trim() === '') {
         usuarioError.textContent = 'Este campo es obligatorio.';
         usuarioError.classList.add('error-active');
-        event.preventDefault();
+        return false
     } else {
         document.getElementById('username').classList.remove('input-error');
         usuarioError.classList.remove('error-active');
@@ -12,23 +12,25 @@ function validarUsuario(user, event) {
     }
 }
 
-function validarPassword(password, confirmPassword, passwordError, event) {
+function validarPassword(password, confirmPassword) {
+    var passwordError = document.getElementById('password-error');
+
     // Verificación de longitud de la contraseña
     if (password === '' && confirmPassword === '') {
         passwordError.textContent = 'Este campo es obligatorio.';
         passwordError.classList.add('error-active');
-        event.preventDefault();
+        return false
     }
     else if (password.length < 8 || password.length > 16) {
         passwordError.textContent = 'La contraseña debe tener entre 8 y 16 caracteres.';
         passwordError.classList.add('error-active');
-        event.preventDefault();
+        return false
     }
     // Verificación de coincidencia de contraseñas
     else if (password !== confirmPassword) {
         passwordError.textContent = 'Las contraseñas deben coincidir.';
         passwordError.classList.add('error-active');
-        event.preventDefault();
+        return false
     }
     else {
         passwordError.classList.remove('error-active');
@@ -36,31 +38,34 @@ function validarPassword(password, confirmPassword, passwordError, event) {
     }
 }
 
-function validarRol(rol, event) {
+function validarRol(rol) {
     var rolError = document.getElementById('rol-error');
     if (rol === '') {
         rolError.textContent = 'Seleccionar un rol es obligatorio.';
         rolError.classList.add('error-active');
-        event.preventDefault();
+        return false
     } else {
         rolError.classList.remove('error-active');
         return true
     }
 }
 
-function validarPreguntasDeSeguridad(campos, event) {
-    var todasRespondidas = true;
+function validarPreguntasDeSeguridad(campos) {
     var securityQuestionsError = document.getElementById('security-questions-error');
+    var todasRespondidas = true;
 
-    campos.forEach(function (campo) {
-        if (campo.value.trim() === '') {
+    var i = 0;
+    while (i <= 2) {
+        if (campos[i] === '') {
             todasRespondidas = false;
         }
-    });
+        i++;
+    }
 
     if (!todasRespondidas) {
+        securityQuestionsError.textContent = 'Por favor, responde todas las preguntas de seguridad.';
         securityQuestionsError.classList.add('error-active');
-        event.preventDefault();
+        return false
     } else {
         securityQuestionsError.classList.remove('error-active');
         return true
@@ -70,27 +75,22 @@ function validarPreguntasDeSeguridad(campos, event) {
 document.getElementById('register-form').addEventListener('submit', function (event) {
     event.preventDefault(); // Esto debe ir al principio para prevenir el envío del formulario
     var user = document.getElementById('username').value;
-    var val1 = validarUsuario(user, event);
-
     var password = document.getElementById('password').value;
     var confirmPassword = document.getElementById('confirm-password').value;
-    var passwordError = document.getElementById('password-error');
-    var val2 = validarPassword(password, confirmPassword, passwordError, event);
-
     var campos = [
-        document.getElementById('pregunta1'),
-        document.getElementById('pregunta2'),
-        document.getElementById('pregunta3')
+        document.getElementById('pregunta1').value,
+        document.getElementById('pregunta2').value,
+        document.getElementById('pregunta3').value
     ];
-    var val3 = validarPreguntasDeSeguridad(campos, event);
-
     var rol = document.getElementById('rol').value;
-    var val4 = validarRol(rol, event);
 
-    if (val1 == true && val2 == true && val3 == true && val4 == true) {
-        var respuesta1 = document.getElementById('pregunta1').value;
-        var respuesta2 = document.getElementById('pregunta2').value;
-        var respuesta3 = document.getElementById('pregunta3').value;
+    val1 = validarUsuario(user)
+    val2 = validarPassword(password, confirmPassword)
+    val3 = validarPreguntasDeSeguridad(campos)
+    val4 = validarRol(rol)
+
+
+    if (val1 && val2 && val3 && val4) {
 
         //petición AJAX
         var xhr = new XMLHttpRequest(); //objeto que interactua con servidor, y envia/recibe datos de forma asincronica.
@@ -101,9 +101,9 @@ document.getElementById('register-form').addEventListener('submit', function (ev
             password: password,
             confirm_password: confirmPassword,
             tipo_rol: rol,
-            respuesta1: respuesta1,
-            respuesta2: respuesta2,
-            respuesta3: respuesta3
+            respuesta1: campos[0],
+            respuesta2: campos[1],
+            respuesta3: campos[2]
         }));
 
         // Manejar la respuesta del servidor
