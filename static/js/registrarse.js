@@ -68,7 +68,6 @@ function validarPreguntasDeSeguridad(campos, event) {
 
 document.getElementById('register-form').addEventListener('submit', function (event) {
     event.preventDefault(); // Esto debe ir al principio para prevenir el envío del formulario
-
     var user = document.getElementById('username').value;
     validarUsuario(user, event);
 
@@ -86,11 +85,23 @@ document.getElementById('register-form').addEventListener('submit', function (ev
 
     validarRol(event);
 
+    var respuesta1 = document.getElementById('pregunta1').value;
+    var respuesta2 = document.getElementById('pregunta2').value;
+    var respuesta3 = document.getElementById('pregunta3').value;
+
     //petición AJAX
     var xhr = new XMLHttpRequest(); //objeto que interactua con servidor, y envia/recibe datos de forma asincronica.
     xhr.open("POST", "/registrarse", true); //tipo de peticion enviada (POST), donde se envia (/registrar), especificando que debe ser asincronica (true)
     xhr.setRequestHeader('Content-Type', 'application/json'); //formato de la peticion
-    xhr.send(JSON.stringify({ username: user /*, otros datos */ }));
+    xhr.send(JSON.stringify({
+        username: user,
+        password: password,
+        confirm_password: confirmPassword,
+        rol: rol,
+        respuesta1: respuesta1,
+        respuesta2: respuesta2, 
+        respuesta3: respuesta3
+    }));
 
     // Manejar la respuesta del servidor
     xhr.onload = function () {
@@ -98,14 +109,18 @@ document.getElementById('register-form').addEventListener('submit', function (ev
             var response = JSON.parse(xhr.responseText);
             var usernameErrorElement = document.getElementById('username-error');
             if (response.usernameExists) { //si la rta indica que el nombre de usuario ya existe
+                alert('hola1')
                 usernameErrorElement.textContent = 'El nombre de usuario ya existe.';
                 usernameErrorElement.classList.add('error-active'); // Añade la clase para mostrar el error
             } else if (response.error) {
+                console.log("Error del servidor:", response.error);
                 // Aquí puedes manejar otros errores
                 // y usar una lógica similar para mostrar mensajes de error
             } else if (response.registered) {
+                alert('hola3')
                 window.location.href = '/home'; // Redirigir a la página de inicio
             } else {
+                alert('hola4')
                 usernameErrorElement.classList.remove('error-active'); // Si no hay errores, a la clase de error
             }
         }

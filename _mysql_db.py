@@ -43,7 +43,7 @@ def iniciar_sesion(username, password):
 def usuario_existe(username):
     conexion = obtener_conexion()
     if conexion is None:
-        return False  # O manejar el error como prefieras
+        return {'error': 'No se pudo conectar a la base de datos'}  # Cambio aquí
     try:
         cursor = conexion.cursor()
         cursor.execute("SELECT * FROM usuario WHERE nombre_usuario = %s", (username,))
@@ -51,19 +51,20 @@ def usuario_existe(username):
     finally:
         cerrar_conexion(cursor, conexion)
 
+
 def registrar_usuario(username, password, rol, rta_1, rta_2, rta_3):
     conexion = obtener_conexion()
     if conexion is None:
-        return False  # O manejar el error como prefieras
+        return {'error': 'No se pudo conectar a la base de datos'}  # Cambio aquí
     try:
         cursor = conexion.cursor()
         query = "INSERT INTO usuario (nombre_usuario, pass, rol, rta_1, rta_2, rta_3) VALUES (%s, %s, %s, %s, %s, %s)"
         valores = (username, password, rol, rta_1, rta_2, rta_3)
-        cursor.execute(query, valores) #reemplaza el marcador %s por los valores pasados por parametro
-        conexion.commit() #asegura que los cambios se guarden en la base de datos
+        cursor.execute(query, valores)
+        conexion.commit()
         return True
     except Error as e:
         print(f"Error al insertar en MySQL: {e}")
-        return False
+        return {'error': str(e)}  # Cambio aquí
     finally:
         cerrar_conexion(cursor, conexion)

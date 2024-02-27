@@ -44,22 +44,25 @@ def route(app): #toma objeto de app flask como argumento
   def registrarse():
     if request.method == 'POST':
       username = request.json.get('username')
-      password = request.form['password']
-      confirm_password = request.form['confirm-password']
-      rol = request.form['rol']
-      respuesta1 = request.form['respuesta1']
-      respuesta2 = request.form['respuesta2']
-      respuesta3 = request.form['respuesta3']
+      password = request.json.get('password')
+      confirm_password = request.json.get('confirm-password')
+      rol = request.json.get('rol')
+      respuesta1 = request.json.get('respuesta1')
+      respuesta2 = request.json.get('respuesta2')
+      respuesta3 = request.json.get('respuesta3')
       
       if password != confirm_password: #verifica que coincidan
         return jsonify({'error': 'Las contraseñas no coinciden'})
 
+      print("hola")
       if usuario_existe(username):
         return jsonify({'usernameExists': True}) #nombre de usuario ya existente
       else:
             if registrar_usuario(username, password, rol, respuesta1, respuesta2, respuesta3):
+              print("hola")
               return jsonify({'registered': True}) #registro exitoso
             else:
+              print("chau")
               return jsonify({'usernameExists': False}) #error en registro
     else:
       return render_template('login/registrarse.html')
