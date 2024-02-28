@@ -116,7 +116,7 @@ function main() {
                 var submitButton = document.createElement('button');
                 submitButton.setAttribute('id', 'id-boton');
                 submitButton.setAttribute('type', 'submit');
-                submitButton.textContent = 'Crear Curso';
+                submitButton.textContent = 'Confirmar';
                 submitButton.className = 'crear-button';
                 form.appendChild(submitButton);
 
