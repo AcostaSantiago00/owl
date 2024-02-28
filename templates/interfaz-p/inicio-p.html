@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Panel del Profesor - Campus Virtual OWL</title>
-    <link rel="stylesheet" href="inicio-p.css"> <!-- Vincula tu archivo CSS aquí -->
+    <link rel="stylesheet" href="../../static/styles/inicio-p.css"> <!-- Vincula tu archivo CSS aquí -->
 </head>
+
 <body>
     <div class="profesor-dashboard">
         <nav class="navbar">
@@ -23,6 +25,9 @@
                 No hay cursos creados hasta el momento.
             </div>
             <button id="crear-curso">Crear Nuevo Curso</button>
+            <!-- Formulario para crear nuevo curso, oculto inicialmente -->
+            <div id="nuevo-curso-form-container" style="display:none;">
+            </div>
             <!-- Lista de cursos actuales para editar -->
         </section>
 
@@ -44,5 +49,7 @@
             <!-- Opciones para personalizar perfil y ajustes -->
         </section>
     </div>
+    <script src="../../static/js/inicio-p.js"></script>
 </body>
+
 </html>

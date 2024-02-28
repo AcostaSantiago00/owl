@@ -33,45 +33,49 @@ function validarPreguntasDeSeguridad(campos) {
     }
 }
 
-document.getElementById('recover-form').addEventListener('submit', function (event) {
-    event.preventDefault();
 
-    var user = document.getElementById('username').value;
+function main() {
+    document.getElementById('recover-form').addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    var campos = [
-        document.getElementById('pregunta1').value,
-        document.getElementById('pregunta2').value,
-        document.getElementById('pregunta3').value
-    ];
+        var user = document.getElementById('username').value;
 
-    val1 = validarUsuario(user, event);
-    val2 = validarPreguntasDeSeguridad(campos);
+        var campos = [
+            document.getElementById('pregunta1').value,
+            document.getElementById('pregunta2').value,
+            document.getElementById('pregunta3').value
+        ];
 
-    if (val1 && val2) {
-        //petición AJAX
-        var xhr = new XMLHttpRequest(); //objeto que interactua con servidor, y envia/recibe datos de forma asincronica.
-        xhr.open("POST", "/reestablecer", true); //tipo de peticion enviada (POST), donde se envia (/registrar), especificando que debe ser asincronica (true)
-        xhr.setRequestHeader('Content-Type', 'application/json'); //formato de la peticion
-        xhr.send(JSON.stringify({
-            username: user,
-            respuesta1: campos[0],
-            respuesta2: campos[1],
-            respuesta3: campos[2]
-        }));
+        val1 = validarUsuario(user, event);
+        val2 = validarPreguntasDeSeguridad(campos);
 
-        // Manejar rta servidor
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                var errorRespuestas = document.getElementById('security-questions-error');
-                if (response.respuesta) { //si la rta indica que el nombre de usuario ya existe
-                    console.log(response.respuesta)
-                    window.location.href = '/'; // Redirigir a la página de inicio
-                } else {
-                    errorRespuestas.textContent = 'Los datos son incorrectos.';
-                    errorRespuestas.classList.add('error-active'); // Añade la clase para mostrar el error
+        if (val1 && val2) {
+            //petición AJAX
+            var xhr = new XMLHttpRequest(); //objeto que interactua con servidor, y envia/recibe datos de forma asincronica.
+            xhr.open("POST", "/reestablecer", true); //tipo de peticion enviada (POST), donde se envia (/registrar), especificando que debe ser asincronica (true)
+            xhr.setRequestHeader('Content-Type', 'application/json'); //formato de la peticion
+            xhr.send(JSON.stringify({
+                username: user,
+                respuesta1: campos[0],
+                respuesta2: campos[1],
+                respuesta3: campos[2]
+            }));
+
+            // Manejar rta servidor
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var errorRespuestas = document.getElementById('security-questions-error');
+                    if (response.respuesta) { //si la rta indica que el nombre de usuario ya existe
+                        window.location.href = '/'; // Redirigir a la página de inicio
+                    } else {
+                        errorRespuestas.textContent = 'Los datos son incorrectos.';
+                        errorRespuestas.classList.add('error-active'); // Añade la clase para mostrar el error
+                    }
                 }
             }
         }
-    }
-});
+    });
+}
+
+main();

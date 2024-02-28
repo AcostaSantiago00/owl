@@ -9,7 +9,7 @@ flash: mostrar mensajes temporales al usuario
 url_for: generar URLs para una funcion especifica
 """
 from _mysql_db import(
-  iniciar_sesion, obtener_conexion, usuario_existe, registrar_usuario, reestablecer_usuario
+  iniciar_sesion, obtener_conexion, usuario_existe, registrar_usuario, reestablecer_usuario, cargar_curso
 ) #importa funcion del modulo personalizado
 
 from werkzeug.utils import secure_filename #para asegurar un nombre de arch que no afecte al sistema de archivos del servidor
@@ -51,12 +51,10 @@ def route(app): #toma objeto de app flask como argumento
         return jsonify({'error': 'Las contraseñas deben coincidir'})
 
       if usuario_existe(username):
-        return jsonify({'usernameExists': True}) #nombre de usuario ya existente
+        return jsonify({'registered': False}) #nombre de usuario ya existente
       else:
-            if registrar_usuario(username, password, rol, respuesta1, respuesta2, respuesta3):
-              return jsonify({'registered': True}) #registro exitoso
-            else:
-              return jsonify({'usernameExists': False}) #error en registro
+        registrar_usuario(username, password, rol, respuesta1, respuesta2, respuesta3)
+        return jsonify({'registered': True}) #registro exitoso
     else:
       return render_template('login/registrarse.html')
     
@@ -81,10 +79,27 @@ def route(app): #toma objeto de app flask como argumento
       return redirect(url_for('home'))
     return render_template("interfaz-a/inicio-a.html")
   
-  @app.route("/interfaz_profesor")
+  @app.route("/interfaz_profesor", methods=['GET', 'POST'])
   def interfaz_profesor():
     if 'user' not in session: # Asegura de que el usuario esté autenticado antes de mostrar la página de inicio
       return redirect(url_for('home'))
+    else:
+      if request.method == 'POST':
+        print(session['user']['id'])
+        nombre_curso = request.form.get('nombre_curso')
+        descripcion_curso = request.form.get('descripcion_curso')
+        foto_curso = request.files['foto_curso']
+        id_profesor = session['user']['id']
+
+        if foto_curso:
+                filename = secure_filename(foto_curso.filename) #sanitizar el nombre del archivo
+                foto_ruta = os.path.join('static/img', filename)  # Construye la ruta del archivo 
+                foto_curso.save(os.path.join('static/img', filename))
+        carga_exitosa = cargar_curso(nombre_curso, descripcion_curso, foto_ruta, id_profesor)
+        if carga_exitosa:
+          return jsonify({'creacion_curso': True})
+        else:
+            return jsonify({'creacion_curso': False})
     return render_template("interfaz-p/inicio-p.html")
   
   @app.route('/logout')

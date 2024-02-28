@@ -11,11 +11,13 @@ CREATE TABLE usuario(
 
 CREATE TABLE curso(
     id_curso INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_curso VARCHAR(30),
+    descripcion_curso VARCHAR(200),
+    foto_curso VARCHAR(255),
     id_profesor INT,
     CONSTRAINT fk_profesor
     FOREIGN KEY(id_profesor)
-    REFERENCES usuario(id),
-    nombre_curso VARCHAR(30)
+    REFERENCES usuario(id)
 );
 
 CREATE TABLE inscripcion(

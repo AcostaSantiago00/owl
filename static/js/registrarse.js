@@ -6,7 +6,6 @@ function validarUsuario(user) {
         usuarioError.classList.add('error-active');
         return false
     } else {
-        document.getElementById('username').classList.remove('input-error');
         usuarioError.classList.remove('error-active');
         return true
     }
@@ -72,59 +71,60 @@ function validarPreguntasDeSeguridad(campos) {
     }
 }
 
-document.getElementById('register-form').addEventListener('submit', function (event) {
-    event.preventDefault(); // Esto debe ir al principio para prevenir el envío del formulario
-    var user = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-    var confirmPassword = document.getElementById('confirm-password').value;
-    var campos = [
-        document.getElementById('pregunta1').value,
-        document.getElementById('pregunta2').value,
-        document.getElementById('pregunta3').value
-    ];
-    var rol = document.getElementById('rol').value;
+function main() {
+    document.getElementById('register-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Esto debe ir al principio para prevenir el envío del formulario
+        var user = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        var confirmPassword = document.getElementById('confirm-password').value;
+        var campos = [
+            document.getElementById('pregunta1').value,
+            document.getElementById('pregunta2').value,
+            document.getElementById('pregunta3').value
+        ];
+        var rol = document.getElementById('rol').value;
 
-    val1 = validarUsuario(user)
-    val2 = validarPassword(password, confirmPassword)
-    val3 = validarPreguntasDeSeguridad(campos)
-    val4 = validarRol(rol)
+        val1 = validarUsuario(user)
+        val2 = validarPassword(password, confirmPassword)
+        val3 = validarPreguntasDeSeguridad(campos)
+        val4 = validarRol(rol)
 
 
-    if (val1 && val2 && val3 && val4) {
+        if (val1 && val2 && val3 && val4) {
 
-        //petición AJAX
-        var xhr = new XMLHttpRequest(); //objeto que interactua con servidor, y envia/recibe datos de forma asincronica.
-        xhr.open("POST", "/registrarse", true); //tipo de peticion enviada (POST), donde se envia (/registrar), especificando que debe ser asincronica (true)
-        xhr.setRequestHeader('Content-Type', 'application/json'); //formato de la peticion
-        xhr.send(JSON.stringify({
-            username: user,
-            password: password,
-            confirm_password: confirmPassword,
-            tipo_rol: rol,
-            respuesta1: campos[0],
-            respuesta2: campos[1],
-            respuesta3: campos[2]
-        }));
+            //petición AJAX
+            var xhr = new XMLHttpRequest(); //objeto que interactua con servidor, y envia/recibe datos de forma asincronica.
+            xhr.open("POST", "/registrarse", true); //tipo de peticion enviada (POST), donde se envia (/registrar), especificando que debe ser asincronica (true)
+            xhr.setRequestHeader('Content-Type', 'application/json'); //formato de la peticion
+            xhr.send(JSON.stringify({
+                username: user,
+                password: password,
+                confirm_password: confirmPassword,
+                tipo_rol: rol,
+                respuesta1: campos[0],
+                respuesta2: campos[1],
+                respuesta3: campos[2]
+            }));
 
-        // Manejar la respuesta del servidor
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                var usernameErrorElement = document.getElementById('username-error');
-                if (response.usernameExists) { //si la rta indica que el nombre de usuario ya existe
-                    usernameErrorElement.textContent = 'El nombre de usuario ya existe.';
-                    usernameErrorElement.classList.add('error-active'); // Añade la clase para mostrar el error
-                } else if (response.error) {
-                    console.log("Error del servidor:", response.error);
-                    // Aquí puedes manejar otros errores
-                    // y usar una lógica similar para mostrar mensajes de error
-                } else if (response.registered) {
-                    window.location.href = '/'; // Redirigir a la página de inicio
-                } else {
-                    usernameErrorElement.classList.remove('error-active'); // Si no hay errores, a la clase de error
+            // Manejar la respuesta del servidor
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var usernameErrorElement = document.getElementById('username-error');
+                    if (response.registered) { //si la rta indica que el nombre de usuario ya existe
+                        usernameErrorElement.textContent = 'El nombre de usuario ya existe.';
+                        usernameErrorElement.classList.add('error-active'); // Añade la clase para mostrar el error
+                    } else if (response.error) {
+                        console.log("Error del servidor:", response.error);
+                        // Aquí puedes manejar otros errores
+                        // y usar una lógica similar para mostrar mensajes de error
+                    } else {
+                        window.location.href = '/'; // Redirigir a la página de inicio
+                    }
                 }
             }
         }
+    });
+}
 
-    }
-});
+main();
