@@ -97,13 +97,13 @@ def route(app): #toma objeto de app flask como argumento
 
   @app.route("/interfaz_alumno")
   def interfaz_alumno():
-    if 'user' not in session: # Asegura de que el usuario esté autenticado antes de mostrar la página de inicio
+    if 'user' not in session or session['user']['rol']!='alumno': # Asegura de que el usuario esté autenticado antes de mostrar la página de inicio
       return redirect(url_for('home'))
     return render_template("interfaz-a/inicio-a.html")
   
   @app.route("/interfaz_profesor", methods=['GET', 'POST'])
   def interfaz_profesor():
-    if 'user' not in session: # Asegura de que el usuario esté autenticado antes de mostrar la página de inicio
+    if 'user' not in session or session['user']['rol']!='profesor': # Asegura de que el usuario esté autenticado antes de mostrar la página de inicio
       return redirect(url_for('home'))
     else:
       if request.method == 'POST':
@@ -126,6 +126,8 @@ def route(app): #toma objeto de app flask como argumento
   
   @app.route("/configuracion", methods=['GET', 'POST'])
   def configuracion():
+    if 'user' not in session:
+      return redirect(url_for('home'))
     if request.method == 'POST':
       password = request.json.get('password')
       confirm_password = request.json.get('confirm_password')

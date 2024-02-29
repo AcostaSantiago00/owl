@@ -11,7 +11,7 @@
         <nav class="navbar">
             <span class="navbar-brand">Bienvenido a OWL</span>
             <div class="navbar-controls">
-                <a href="/configuracion_cuenta.html" class="nav-link">Configuración de Cuenta</a>
+                <a href="{{ url_for('configuracion') }}" class="nav-link">Configuración de Cuenta</a>
                 <button id="logout-button">Cerrar Sesión</button>
             </div>
         </nav>
@@ -26,14 +26,6 @@
             <!-- Mensaje de No Inscripción -->
             <div class="mensaje-no-inscripcion">
                 No estás inscrito en ningún curso actualmente.
-            </div>
-        </section>
-
-        <!-- Sección de Foros de Discusión -->
-        <section class="foros-discusion">
-            <h2>Foros de Discusión</h2>
-            <div class="lista-foros">
-                <!-- Lista de enlaces a foros de discusión -->
             </div>
         </section>
 
@@ -54,5 +46,6 @@
         </section>
 
     </div>
+    <script src="../../static/js/inicio-a.js"></script>
 </body>
 </html>
