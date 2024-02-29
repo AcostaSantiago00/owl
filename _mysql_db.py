@@ -33,7 +33,7 @@ def iniciar_sesion(username, password):
                 'id': usuario[0],
                 'nombre_usuario': usuario[1],
                 'rol': usuario[3],  # Asumiendo que el rol está en la cuarta columna
-                'foto': usuario[7]
+                'foto_perfil': usuario[7]
             }
             return info_usuario
         else:

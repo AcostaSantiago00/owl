@@ -72,18 +72,6 @@ function main() {
     window.onload = function () {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/configuracion', true);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                document.querySelector('input[name="fullname"]').value = response.username;
-                document.querySelector('input[name="rol"]').value = response.rol;
-            } else {
-                console.error('Error al recuperar la información del usuario');
-            }
-        };
-        xhr.onerror = function () {
-            console.error('Error de conexión al realizar la petición AJAX');
-        };
         xhr.send();
     }
 

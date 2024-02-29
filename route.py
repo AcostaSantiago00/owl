@@ -149,9 +149,11 @@ def route(app): #toma objeto de app flask como argumento
       else:
         return jsonify({'error': 'Sesión no válida o expirada'})
     else:
+      print(session['user'].get('foto_perfil'))
       user_data = {
         'username': session['user']['nombre_usuario'],
-        'rol': session['user']['rol']
+        'rol': session['user']['rol'],
+        'foto_perfil': session['user']['foto_perfil']
         }
       return render_template('interfaz-p/configuracion-p.html', user_data=user_data)
   
