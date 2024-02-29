@@ -1,0 +1,131 @@
+/* Estilos generales, similares a la página de inicio de sesión */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Estilos del contenedor de recuperación de contraseña */
+.password-recovery-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilos de los títulos y textos */
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+p {
+    color: #555;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilos para la tabla de preguntas de seguridad */
+.preguntas-seguridad {
+    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
+    margin-top: 20px;
+    border-collapse: collapse; /* Elimina el espacio entre las celdas */
+}
+
+.preguntas-seguridad td {
+    padding: 8px; /* Espaciado interno en las celdas */
+    border: 1px solid rgb(59 130 246 / .5); /* Bordes sutiles para las celdas */
+}
+
+.preguntas-seguridad label {
+    display: block; /* Hace que la etiqueta ocupe toda la línea */
+    margin-bottom: 5px; /* Espacio debajo de la etiqueta */
+}
+
+input[type="text"]{
+    border: 1px solid rgb(59 130 246 / .5);
+}
+
+.preguntas-seguridad input[type="text"] {
+    width: 100%; /* Asegura que el input ocupe todo el ancho de la celda */
+    padding: 8px;
+    border-radius: 4px; /* Bordes redondeados para los campos de texto */
+}
+
+.preguntas-seguridad tr{
+    width: 20px;
+}
+
+#pregunta1, #pregunta2, #pregunta3{
+    width: 200px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-control {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    width: calc(100% - 20px);
+    margin-top: 10PX;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(59 130 246 / .5);
+    color: white;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: rgba(109, 160, 246, .5); /* Un tono más claro para el hover */
+}
+
+/* Estilos para los enlaces */
+.link {
+    display: block;
+    text-align: center;
+    color: #0066cc;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .password-recovery-container {
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+}
+
+.error {
+    color: red;
+    display: none;
+}
+
+.error-active {
+    display: block;
+}
+
+.input-error {
+    border: 1px solid red;
+}

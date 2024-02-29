@@ -9,7 +9,7 @@ flash: mostrar mensajes temporales al usuario
 url_for: generar URLs para una funcion especifica
 """
 from _mysql_db import(
-  iniciar_sesion, obtener_conexion, usuario_existe, registrar_usuario, reestablecer_usuario, cargar_curso
+  iniciar_sesion, obtener_conexion, usuario_existe, registrar_usuario, reestablecer_usuario, cargar_curso, cambiar_contrasena
 ) #importa funcion del modulo personalizado
 
 from werkzeug.utils import secure_filename #para asegurar un nombre de arch que no afecte al sistema de archivos del servidor
@@ -67,11 +67,33 @@ def route(app): #toma objeto de app flask como argumento
       respuesta3 = request.json.get('respuesta3')
       
       if reestablecer_usuario(username, respuesta1, respuesta2, respuesta3):
+        session['temp_username']=username
+        print(session['temp_username'])
         return jsonify({'respuesta': True})
       else:
         return jsonify({'respuesta': False})
     else:
       return render_template('login/reestablecer.html')
+    
+  @app.route("/reestablecer-2", methods=['GET', 'POST'])
+  def reestablecer_2():
+    print(session['temp_username'])
+    if request.method == 'POST':
+      password = request.json.get('password')
+      confirm_password = request.json.get('confirm_password')
+      if password != confirm_password:
+        return jsonify({'error': 'Las contraseñas deben coincidir'})
+      elif 'temp_username' in session:
+        exito = cambiar_contrasena(password, session['temp_username'])
+        if exito:
+          session.pop('temp_username', None)
+          return jsonify({'cambio_exitoso': True})
+        else:
+          return jsonify({'error': 'Error al cambiar la contraseña'})
+      else:
+        return jsonify({'error': 'Sesión no válida o expirada'})
+    else:
+      return render_template('login/reestablecer-2.html')
 
   @app.route("/interfaz_alumno")
   def interfaz_alumno():
@@ -101,6 +123,24 @@ def route(app): #toma objeto de app flask como argumento
         else:
             return jsonify({'creacion_curso': False})
     return render_template("interfaz-p/inicio-p.html")
+  
+  @app.route("/configuracion", methods=['GET', 'POST'])
+  def configuracion():
+    if request.method == 'POST':
+      password = request.json.get('password')
+      confirm_password = request.json.get('confirm_password')
+      if password != confirm_password:
+        return jsonify({'error': 'Las contraseñas deben coincidir'})
+      elif 'user' in session:
+        exito = cambiar_contrasena(password, session['user']['nombre_usuario'])
+        if exito:
+          return jsonify({'cambio_exitoso': True})
+        else:
+          return jsonify({'error': 'Error al cambiar la contraseña'})
+      else:
+        return jsonify({'error': 'Sesión no válida o expirada'})
+    else:
+      return render_template('interfaz-p/configuracion-p.html')
   
   @app.route('/logout')
   def logout():

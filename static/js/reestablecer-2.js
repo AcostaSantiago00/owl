@@ -22,55 +22,46 @@ function validarPassword(password, confirmPassword) {
         passwordError.classList.remove('error-active');
         return true
     }
-} 
-
-function logout() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/logout', true); // Asegúrate de que la ruta '/logout' esté definida en tu servidor Flask
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            // Redirigir al usuario a la página de inicio de sesión u otra página
-            window.location.href = '/';
-        }
-    };
-    xhr.send();
 }
 
-function main(){
-    document.getElementById('actualizar-pass').addEventListener('submit', function(event) {
-        event.preventDefault();
+function main() {
+    document.getElementById('recover-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Esto debe ir al principio para prevenir el envío del formulario
         var password = document.getElementById('new-password').value;
-        var confirmPassword = document.getElementById('confirm-new-password').value;
-        if (validarPassword(password, confirmPassword)) {
+        var confirmPassword = document.getElementById('new-confirm-password').value;
+
+        val = validarPassword(password, confirmPassword)
+
+        if (val) {
 
             //petición AJAX
             var xhr = new XMLHttpRequest(); //objeto que interactua con servidor, y envia/recibe datos de forma asincronica.
-            xhr.open("POST", "/configuracion", true); //tipo de peticion enviada (POST), donde se envia (/registrar), especificando que debe ser asincronica (true)
-            xhr.setRequestHeader('Content-Type','application/json'); //formato de la peticion
+            xhr.open("POST", "/reestablecer-2", true); //tipo de peticion enviada (POST), donde se envia (/registrar), especificando que debe ser asincronica (true)
+            xhr.setRequestHeader('Content-Type', 'application/json'); //formato de la peticion
             xhr.send(JSON.stringify({
                 password: password,
-                confirm_password: confirmPassword,
+                confirm_password: confirmPassword
             }));
 
             // Manejar la respuesta del servidor
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
-                    if (response.error) {
+                    var usernameErrorElement = document.getElementById('username-error');
+                    if (response.registered) { //si la rta indica que el nombre de usuario ya existe
+                        usernameErrorElement.textContent = 'El nombre de usuario ya existe.';
+                        usernameErrorElement.classList.add('error-active'); // Añade la clase para mostrar el error
+                    } else if (response.error) {
                         console.log("Error del servidor:", response.error);
                         // Aquí puedes manejar otros errores
                         // y usar una lógica similar para mostrar mensajes de error
                     } else {
-                        window.location.href = '/configuracion'; // Redirigir a la página de inicio
+                        window.location.href = '/'; // Redirigir a la página de inicio
                     }
                 }
             }
         }
     });
-
-    document.getElementById('logout-button').addEventListener('click', function() { 
-        logout();   // Llamar a una función para manejar el cierre de sesión
-    });
 }
 
-main()
+main();

@@ -67,7 +67,7 @@ function main() {
                     var response = JSON.parse(xhr.responseText);
                     var errorRespuestas = document.getElementById('security-questions-error');
                     if (response.respuesta) { //si la rta indica que el nombre de usuario ya existe
-                        window.location.href = '/'; // Redirigir a la página de inicio
+                        window.location.href = '/reestablecer-2'; // Redirigir a la página de inicio
                     } else {
                         errorRespuestas.textContent = 'Los datos son incorrectos.';
                         errorRespuestas.classList.add('error-active'); // Añade la clase para mostrar el error

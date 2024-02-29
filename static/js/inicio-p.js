@@ -53,8 +53,35 @@ function enviarCurso() {
     xhr.send(formData);
 }
 
+function actualizarCursos(cursos) {
+    const contenedor = document.getElementById('contenedor-cursos');
+    contenedor.innerHTML = ''; // Limpiar el contenedor
 
+    if (cursos.length === 0) {
+        // Mostrar mensaje si no hay cursos
+        contenedor.innerHTML = '<div class="mensaje-no-cursos">No hay cursos creados hasta el momento.</div>';
+    } else {
+        // Crear y agregar un div para cada curso
+        cursos.forEach(curso => {
+            const divCurso = document.createElement('div');
+            divCurso.className = 'curso';
+            divCurso.textContent = curso.nombre; // Asume que cada curso tiene una propiedad 'nombre'
+            contenedor.appendChild(divCurso);
+        });
+    }
+}
 
+function logout() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/logout', true); // Asegúrate de que la ruta '/logout' esté definida en tu servidor Flask
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            // Redirigir al usuario a la página de inicio de sesión u otra página
+            window.location.href = '/';
+        }
+    };
+    xhr.send();
+}
 
 function main() {
     document.addEventListener('DOMContentLoaded', function () {
@@ -136,6 +163,11 @@ function main() {
                 });
             }
         });
+        document.getElementById('logout-button').addEventListener('click', function() {
+            // Llamar a una función para manejar el cierre de sesión
+            logout();
+        });
+        
     });
 }
 

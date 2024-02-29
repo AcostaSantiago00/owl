@@ -84,6 +84,22 @@ def reestablecer_usuario(username, rta_1, rta_2, rta_3):
         return False
     finally:
         cerrar_conexion(cursor, conexion)
+    
+def cambiar_contrasena(password, nombre_usuario):
+    conexion = obtener_conexion() #establece conexion con la base de datos
+    if conexion is None:
+        print("No se pudo conectar a la base de datos")
+        return False
+    try:
+        cursor = conexion.cursor() #se utiliza para ejecutar consultas en bd
+        cursor.execute("UPDATE usuario SET pass = %s WHERE nombre_usuario = %s", (password, nombre_usuario))
+        conexion.commit()  # Asegúrate de hacer commit de la transacción
+        return True
+    except Error as e:
+        print(f"Error al insertar en MySQL: {e}")
+        return False
+    finally:
+        cerrar_conexion(cursor, conexion)
 
 def cargar_curso(nombre_curso, descripcion_curso, foto_curso, id_profesor):
     conexion = obtener_conexion() #establece conexion con la base de datos
