@@ -6,7 +6,8 @@ CREATE TABLE usuario(
     rol varchar(30),
     rta_1 VARCHAR(30),
     rta_2 VARCHAR(30),
-    rta_3 VARCHAR(30)
+    rta_3 VARCHAR(30),
+    foto_perfil VARCHAR(255)
 );
 
 CREATE TABLE curso(

@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #ffffff; /* Color de fondo vainilla claro */
+    background-color: #ffffff;
+    /* Color de fondo vainilla claro */
     margin: 0;
     padding: 0;
 }
@@ -9,7 +10,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333; /* O el color que prefieras */
+    background-color: #333;
+    /* O el color que prefieras */
     color: white;
     padding: 10px 20px;
 }
@@ -24,29 +26,33 @@ body {
 }
 
 .nav-link {
-    color: white;
-    text-decoration: none;
-    margin-right: 15px;
-    padding: 8px;
+    padding: 8px 15px;
+    border: none;
     border-radius: 4px;
-    background-color: #5cb85c; /* O el color que prefieras */
+    background-color: rgba(59, 130, 246, .5);
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
 .nav-link:hover {
-    background-color: #4cae4c; /* Un tono más oscuro para el efecto hover */
+    background-color: rgba(109, 160, 246, .5);
+    /* Un tono más oscuro para el efecto hover */
 }
 
 #logout-button {
     padding: 8px 15px;
     border: none;
     border-radius: 4px;
-    background-color: #d9534f; /* O el color que prefieras */
+    background-color: #d9534f;
+    /* O el color que prefieras */
     color: white;
     cursor: pointer;
 }
 
 #logout-button:hover {
-    background-color: #c9302c; /* Un tono más oscuro para el efecto hover */
+    background-color: #c9302c;
+    /* Un tono más oscuro para el efecto hover */
 }
 
 .config-container {
@@ -59,7 +65,8 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.config-container h1, .config-container h2 {
+.config-container h1,
+.config-container h2 {
     color: #333;
 }
 
@@ -67,11 +74,15 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 100px; /* O el tamaño que prefieras */
-    height: 100px; /* Asegúrate de que sea el mismo que el ancho para un círculo perfecto */
+    width: 100px;
+    /* O el tamaño que prefieras */
+    height: 100px;
+    /* Asegúrate de que sea el mismo que el ancho para un círculo perfecto */
     border-radius: 50%;
-    border: 2px solid #ccc; /* Opcional: un borde para la foto de perfil */
-    margin-bottom: 15px; /* Espacio debajo de la imagen */
+    border: 2px solid rgba(59, 130, 246, .5);
+    /* Opcional: un borde para la foto de perfil */
+    margin-bottom: 15px;
+    /* Espacio debajo de la imagen */
 }
 
 .inputFile {
@@ -85,19 +96,19 @@ form {
     margin-top: 15px;
 }
 
-form input{
+form input {
     text-align: center;
 }
 
-form input[type="text"], form input[type="password"], form input[type="email"] {
+form input[type="password"]{
     width: 50%;
     padding: 8px;
     margin: 10px 0;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(59, 130, 246, .5);
     border-radius: 4px;
 }
 
-form div{
+form div {
     text-align: center;
 }
 
@@ -114,6 +125,32 @@ form input[type="submit"]:hover {
     background-color: #45a049;
 }
 
-h2{
+h2 {
+    text-align: center;
+}
+
+.personal-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 53%;
+    margin-top: 10px;
+    margin-bottom: 10px; 
+}
+
+.input-label {
+    width: 20%;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.input-field {
+    border: 1px solid rgba(59, 130, 246, .5);
+    width: 80%;
     text-align: center;
 }

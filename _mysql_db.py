@@ -32,7 +32,8 @@ def iniciar_sesion(username, password):
             info_usuario = {
                 'id': usuario[0],
                 'nombre_usuario': usuario[1],
-                'rol': usuario[3]  # Asumiendo que el rol está en la cuarta columna
+                'rol': usuario[3],  # Asumiendo que el rol está en la cuarta columna
+                'foto': usuario[7]
             }
             return info_usuario
         else:
@@ -52,15 +53,15 @@ def usuario_existe(username):
         cerrar_conexion(cursor, conexion)
 
 
-def registrar_usuario(username, password, rol, rta_1, rta_2, rta_3):
+def registrar_usuario(username, password, rol, rta_1, rta_2, rta_3, foto_perfil):
     conexion = obtener_conexion()
     if conexion is None:
         print("No se pudo conectar a la base de datos")
         return False
     try:
         cursor = conexion.cursor()
-        query = "INSERT INTO usuario (nombre_usuario, pass, rol, rta_1, rta_2, rta_3) VALUES (%s, %s, %s, %s, %s, %s)"
-        valores = (username, password, rol, rta_1, rta_2, rta_3)
+        query = "INSERT INTO usuario (nombre_usuario, pass, rol, rta_1, rta_2, rta_3, foto_perfil) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        valores = (username, password, rol, rta_1, rta_2, rta_3, foto_perfil)
         cursor.execute(query, valores)
         conexion.commit()
         return True
@@ -111,6 +112,22 @@ def cargar_curso(nombre_curso, descripcion_curso, foto_curso, id_profesor):
         query = "INSERT INTO curso (nombre_curso, descripcion_curso, foto_curso, id_profesor) VALUES (%s, %s, %s, %s)"
         valores = (nombre_curso, descripcion_curso, foto_curso, id_profesor)
         cursor.execute(query, valores)
+        conexion.commit()  # Asegúrate de hacer commit de la transacción
+        return True
+    except Error as e:
+        print(f"Error al insertar en MySQL: {e}")
+        return False
+    finally:
+        cerrar_conexion(cursor, conexion)
+
+def cambiar_informacion(password, nombre_usuario, foto_ruta):
+    conexion = obtener_conexion() #establece conexion con la base de datos
+    if conexion is None:
+        print("No se pudo conectar a la base de datos")
+        return False
+    try:
+        cursor = conexion.cursor() #se utiliza para ejecutar consultas en bd
+        cursor.execute("UPDATE usuario SET pass = %s, foto_perfil = %s WHERE nombre_usuario = %s", (password, foto_ruta, nombre_usuario))
         conexion.commit()  # Asegúrate de hacer commit de la transacción
         return True
     except Error as e:

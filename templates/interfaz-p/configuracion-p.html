@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Configuración de Cuenta - OWL</title>
     <link rel="stylesheet" href="../../static/styles/configuracion-p.css"> <!-- Vincula tu archivo CSS aquí -->
 </head>
+
 <body>
     <div class="config-container">
         <nav class="navbar">
             <span class="navbar-brand">Configuracion de la cuenta</span>
             <div class="navbar-controls">
-                <a href="{{ url_for('interfaz_profesor') }}" class="nav-link">Volver al inicio</a>
+                <button id="inicio-button" class="nav-link">Volver al inicio</button>
                 <button id="logout-button">Cerrar Sesión</button>
             </div>
         </nav>
@@ -19,30 +21,34 @@
 
         <section class="personal-info">
             <h2>Información Personal</h2>
-            <form id= "info-personal" action="/configuracion" method="post">
-                <img class="profile-pic" src="../../static/img/perfil.jpg" alt="foto">
-                <input type="file" class="inputFile hidden" accept="image/jpeg, image/png, image/jpg"  ="Cambiar foto de perfil"/>
-                <input type="text" name="fullname" placeholder="Nombre Completo">
-                <input type="email" name="email" placeholder="Correo Electrónico">
-                <div>
-                    <input id="actualizar-info" type="submit" value="Actualizar Información">
-                </div>
-            </form>
+            <img class="profile-pic" src="../../static/img/perfil.jpg" alt="foto">
+            <input type="file" id="foto-perfil" class="inputFile hidden" accept="image/jpeg, image/png, image/jpg">
+            <div class="input-container">
+                <label for="fullname" class="input-label">Usuario:</label>
+                <input type="text" id="fullname" name="fullname" disabled class="input-field" value="{{ user_data.username }}">
+            </div>
+            <div class="input-container">
+                <label for="rol" class="input-label">Rol:</label>
+                <input type="text" id="rol" name="rol" disabled class="input-field" value="{{ user_data.rol }}">
+            </div>
         </section>
+
 
         <!-- Sección de Cambio de Contraseña -->
         <section class="password-change">
             <h2>Cambiar Contraseña</h2>
             <form id="actualizar-pass" action="/configuracion" method="post">
                 <input id="new-password" type="password" name="new-password" placeholder="Nueva Contraseña">
-                <input id="confirm-new-password" type="password" name="confirm-new-password" placeholder="Confirmar Nueva Contraseña">
+                <input id="confirm-new-password" type="password" name="confirm-new-password"
+                    placeholder="Confirmar Nueva Contraseña">
                 <span id="password-error"></span>
                 <div>
-                    <input type="submit" value="Actualizar Contraseña">
+                    <input type="submit" value="Actualizar Información">
                 </div>
             </form>
         </section>
     </div>
     <script src="../../static/js/configuracion.js"></script>
 </body>
+
 </html>

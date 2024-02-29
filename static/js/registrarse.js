@@ -103,7 +103,7 @@ function main() {
                 tipo_rol: rol,
                 respuesta1: campos[0],
                 respuesta2: campos[1],
-                respuesta3: campos[2]
+                respuesta3: campos[2],
             }));
 
             // Manejar la respuesta del servidor
@@ -111,7 +111,7 @@ function main() {
                 if (xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
                     var usernameErrorElement = document.getElementById('username-error');
-                    if (response.registered) { //si la rta indica que el nombre de usuario ya existe
+                    if (!response.registered) { //si la rta indica que el nombre de usuario ya existe
                         usernameErrorElement.textContent = 'El nombre de usuario ya existe.';
                         usernameErrorElement.classList.add('error-active'); // Añade la clase para mostrar el error
                     } else if (response.error) {

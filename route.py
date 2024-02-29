@@ -9,7 +9,7 @@ flash: mostrar mensajes temporales al usuario
 url_for: generar URLs para una funcion especifica
 """
 from _mysql_db import(
-  iniciar_sesion, obtener_conexion, usuario_existe, registrar_usuario, reestablecer_usuario, cargar_curso, cambiar_contrasena
+  iniciar_sesion, obtener_conexion, usuario_existe, registrar_usuario, reestablecer_usuario, cargar_curso, cambiar_informacion, cambiar_contrasena
 ) #importa funcion del modulo personalizado
 
 from werkzeug.utils import secure_filename #para asegurar un nombre de arch que no afecte al sistema de archivos del servidor
@@ -46,6 +46,7 @@ def route(app): #toma objeto de app flask como argumento
       respuesta1 = request.json.get('respuesta1')
       respuesta2 = request.json.get('respuesta2')
       respuesta3 = request.json.get('respuesta3')
+      foto_perfil = 'static/img/perfil.jpg'
       
       if password != confirm_password: #verifica que coincidan
         return jsonify({'error': 'Las contraseñas deben coincidir'})
@@ -53,7 +54,7 @@ def route(app): #toma objeto de app flask como argumento
       if usuario_existe(username):
         return jsonify({'registered': False}) #nombre de usuario ya existente
       else:
-        registrar_usuario(username, password, rol, respuesta1, respuesta2, respuesta3)
+        registrar_usuario(username, password, rol, respuesta1, respuesta2, respuesta3, foto_perfil)
         return jsonify({'registered': True}) #registro exitoso
     else:
       return render_template('login/registrarse.html')
@@ -129,22 +130,33 @@ def route(app): #toma objeto de app flask como argumento
     if 'user' not in session:
       return redirect(url_for('home'))
     if request.method == 'POST':
-      password = request.json.get('password')
-      confirm_password = request.json.get('confirm_password')
+      password = request.form.get('password')
+      confirm_password = request.form.get('confirm_password')
+      foto_perfil = request.files['foto_perfil']
+
+      if foto_perfil:
+        filename = secure_filename(foto_perfil.filename) #sanitizar el nombre del archivo
+        foto_ruta = os.path.join('static/img', filename)  # Construye la ruta del archivo 
+        foto_perfil.save(os.path.join('static/img', filename))
+
       if password != confirm_password:
         return jsonify({'error': 'Las contraseñas deben coincidir'})
       elif 'user' in session:
-        exito = cambiar_contrasena(password, session['user']['nombre_usuario'])
-        if exito:
+        if cambiar_informacion(password, session['user']['nombre_usuario'], foto_ruta):
           return jsonify({'cambio_exitoso': True})
         else:
           return jsonify({'error': 'Error al cambiar la contraseña'})
       else:
         return jsonify({'error': 'Sesión no válida o expirada'})
     else:
-      return render_template('interfaz-p/configuracion-p.html')
+      user_data = {
+        'username': session['user']['nombre_usuario'],
+        'rol': session['user']['rol']
+        }
+      return render_template('interfaz-p/configuracion-p.html', user_data=user_data)
   
   @app.route('/logout')
   def logout():
      session.clear()
      return redirect(url_for('home'))
+  
