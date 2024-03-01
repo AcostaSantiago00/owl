@@ -10,7 +10,8 @@ url_for: generar URLs para una funcion especifica
 """
 from _mysql_db import(
   iniciar_sesion, obtener_conexion, usuario_existe, registrar_usuario, reestablecer_usuario, cargar_curso, cambiar_informacion, cambiar_contrasena,
-  informacion_curso, obtener_curso_por_id, buscar_cursos, inscripcion_curso, informacion_inscripcion
+  informacion_curso, obtener_curso_por_id, buscar_cursos, inscripcion_curso, informacion_inscripcion, obtener_alumnos_inscritos, actualizar_notas_en_db,
+  obtener_calificaciones_alumno
 ) #importa funcion del modulo personalizado
 
 from werkzeug.utils import secure_filename #para asegurar un nombre de arch que no afecte al sistema de archivos del servidor
@@ -135,6 +136,12 @@ def route(app): #toma objeto de app flask como argumento
         return render_template('interfaz-a/inicio-a.html', cursos_inscriptos=cursos_inscriptos)
     else:
         return render_template('interfaz-a/inicio-a.html', mensaje="No estás inscrito en ningún curso.")
+    
+  @app.route("/alumnos_curso/<int:id_curso>")
+  def alumnos_curso(id_curso):
+    alumnos = obtener_alumnos_inscritos(id_curso)
+    print(alumnos)
+    return jsonify(alumnos)
  
   
   @app.route("/interfaz_profesor", methods=['GET', 'POST'])
@@ -158,8 +165,11 @@ def route(app): #toma objeto de app flask como argumento
           return jsonify({'creacion_curso': False})
     else:
       curso_data = informacion_curso(session['user']['id'])
-      cursos_lista = [{'id_curso': curso[0], 'nombre_curso': curso[1], 'foto_curso': curso[2]} for curso in curso_data]
-      return render_template('interfaz-p/inicio-p.html', cursos=cursos_lista)
+      if curso_data:
+        cursos_lista = [{'id_curso': curso[0], 'nombre_curso': curso[1], 'foto_curso': curso[2]} for curso in curso_data]
+        return render_template('interfaz-p/inicio-p.html', cursos=cursos_lista)
+      else:
+        return render_template('interfaz-p/inicio-p.html', cursos=[])
   
   @app.route("/configuracion", methods=['GET', 'POST'])
   def configuracion():
@@ -207,4 +217,20 @@ def route(app): #toma objeto de app flask como argumento
     else:
       return "Curso no encontrado", 404
     
-  
+  @app.route("/actualizar_notas/<int:id_alumno>", methods=['POST'])
+  def actualizar_notas(id_alumno):
+    datos_notas = request.get_json()
+    print(datos_notas)
+
+    exito = actualizar_notas_en_db(id_alumno, datos_notas)
+    if exito:
+      return jsonify({'success': True, 'message': 'Notas actualizadas correctamente'})
+    else:
+      return jsonify({'success': False, 'message': 'Error al actualizar las notas'}), 500
+
+
+  @app.route("/calificaciones_alumno/<int:id_curso>")
+  def calificaciones_alumno(id_curso):
+    calificaciones = obtener_calificaciones_alumno(session['user']['id'], id_curso)
+    print(calificaciones)
+    return jsonify(calificaciones)

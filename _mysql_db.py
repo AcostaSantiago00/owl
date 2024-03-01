@@ -224,3 +224,80 @@ def informacion_inscripcion(id_alumno):
         return None
     finally:
         cerrar_conexion(cursor, conexion)
+
+def obtener_alumnos_inscritos(id_curso):
+    conexion = obtener_conexion()
+    if conexion is None:
+        print("Error al conectarse a la base de datos")
+        return []
+    try:
+        with conexion.cursor() as cursor:
+            consulta_sql = """
+            SELECT 
+                u.id AS id_alumno, 
+                u.nombre_usuario, 
+                i.nota_primer_p, 
+                i.nota_segundo_p, 
+                i.nota_recuperatorio, 
+                i.nota_final
+            FROM inscripcion i
+            JOIN usuario u ON i.id_alumno = u.id
+            WHERE i.id_curso = %s;
+            """
+            cursor.execute(consulta_sql, (id_curso,))
+            resultado = cursor.fetchall()
+            return resultado
+    except Exception as e:
+        print(f"Ocurrió un error al obtener la información de inscripción: {e}")
+        return []
+    finally:
+        if conexion is not None:
+            conexion.close()
+
+def actualizar_notas_en_db(id_alumno, datos_notas):
+    conexion = obtener_conexion()
+    if conexion is None:
+        return False
+    try:
+        cursor = conexion.cursor()
+        consulta_sql = """
+        UPDATE inscripcion
+        SET nota_primer_p = %s, nota_segundo_p = %s, nota_recuperatorio = %s, nota_final = %s
+        WHERE id_alumno = %s AND id_curso = %s;
+        """
+        cursor.execute(consulta_sql, (
+            datos_notas['primer_p'], 
+            datos_notas['segundo_p'], 
+            datos_notas['recuperatorio'], 
+            datos_notas['final'], 
+            id_alumno, 
+            datos_notas['id_curso']
+        ))
+        conexion.commit()
+        return True
+    except Exception as e:
+        print(f"Ocurrió un error al actualizar las notas en la base de datos: {e}")
+        return False
+    finally:
+        conexion.close()
+
+def obtener_calificaciones_alumno(id_alumno, id_curso):
+    print(f"Obteniendo calificaciones para alumno {id_alumno} en curso {id_curso}")
+    conexion = obtener_conexion()
+    if conexion is None:
+        return []
+    try:
+        with conexion.cursor() as cursor:
+            consulta_sql = """
+            SELECT nota_primer_p, nota_segundo_p, nota_recuperatorio, nota_final
+            FROM inscripcion
+            WHERE id_alumno = %s AND id_curso = %s;
+            """
+            cursor.execute(consulta_sql, (id_alumno, id_curso))
+            calificaciones = cursor.fetchall()
+            return calificaciones
+    except Exception as e:
+        print(f"Ocurrió un error al obtener las calificaciones: {e}")
+        return []
+    finally:
+        conexion.close()

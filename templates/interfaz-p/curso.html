@@ -4,9 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Cursos</title>
+    <link rel="stylesheet" href="../../static/styles/curso.css">
 </head>
 
 <body>
+    <div class="dashboard-container">
+        <nav class="navbar">
+            <span class="navbar-brand">Bienvenido a OWL</span>
+            <div class="navbar-controls">
+                <a href="{{ url_for('configuracion') }}" class="nav-link">Configuración de Cuenta</a>
+                <button id="logout-button">Cerrar Sesión</button>
+            </div>
+        </nav>
+
+        <div id="cursos-inscriptos">
+        </div>
+
+        <section class="calificaciones">
+            <h2>Calificaciones</h2>
+            </form>
+
+            <div id="tabla-calificaciones">
+            </div>
+        </section>
+
+        <section class="buscar-cursos">
+            <h2>Buscar cursos</h2>
+        </section>
+
+    </div>
+    <script src="../../static/js/curso.js"></script>
 </body>
 
 </html>

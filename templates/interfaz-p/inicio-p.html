@@ -40,10 +40,19 @@
             <!-- Lista de cursos actuales para editar -->
         </section>
 
-        <!-- Sección de Tareas y Evaluaciones -->
         <section class="tareas-evaluaciones">
             <h2>Calificaciones</h2>
-            <!-- Herramientas para crear y calificar tareas -->
+            <form id="filtro-curso">
+                <select name="curso" id="select-curso" onchange="filtrar_calificacion_por_curso()">
+                    <option value="">Selecciona un curso</option>
+                    {% for curso in cursos %}
+                    <option value="{{ curso.id_curso }}">{{ curso.nombre_curso }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+
+            <div id="tabla-calificaciones">
+            </div>
         </section>
     </div>
     <script src="../../static/js/inicio-p.js"></script>

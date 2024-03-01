@@ -173,6 +173,45 @@ section {
     margin-top: 5px;
 }
 
+#filtro-curso {
+    margin-bottom: 20px;
+}
+
+#select-curso {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#tabla-calificaciones {
+    margin-top: 20px;
+}
+
+#tabla-calificaciones table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tabla-calificaciones th,
+#tabla-calificaciones td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#tabla-calificaciones th {
+    background-color: #f4f4f4;
+}
+
+#tabla-calificaciones tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#tabla-calificaciones tr:hover {
+    background-color: #f1f1f1;
+}
+
+
 
 /* Media query para pantallas de tamaño medio, por ejemplo, tablets */
 @media (max-width: 768px) {

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Principal del Alumno - OWL</title>
-    <link rel="stylesheet" href="../../static/styles/inicio-a.css"> <!-- Vincula tu archivo CSS aquí -->
+    <link rel="stylesheet" href="../../static/styles/inicio-a.css">
 </head>
 
 <body>
@@ -18,7 +18,6 @@
             </div>
         </nav>
 
-        <!-- Sección de Cursos Inscritos -->
         <div id="cursos-inscriptos">
             {% for curso in cursos_inscriptos %}
             <a id="curso-{{ curso.id_curso }}" class="curso"
@@ -36,12 +35,20 @@
         <!-- Sección de Calificaciones -->
         <section class="calificaciones">
             <h2>Calificaciones</h2>
-            <div class="resumen-calificaciones">
-                <!-- Resumen de calificaciones por curso -->
-            </div>
+                <form id="seleccion-curso">
+                    <label for="select-curso">Selecciona un curso:</label>
+                    <select name="curso" id="select-curso" onchange="cargar_calificaciones()">
+                        <option value="">-- Elige un Curso --</option>
+                        {% for curso in cursos_inscriptos %}
+                            <option value="{{ curso.id_curso }}">{{ curso.nombre_curso }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+
+                <div id="tabla-calificaciones">
+                </div>
         </section>
 
-        <!-- Sección de Ayuda y Soporte -->
         <section class="buscar-cursos">
             <h2>Buscar cursos</h2>
             <div id="buscar-cursos">
