@@ -26,8 +26,7 @@
             <h1>Agregar Contenido al Curso: {{ curso.nombre_curso }}</h1>
 
             <!-- Formulario para agregar un nuevo título y PDFs -->
-            <form action="{{ url_for('agregar_contenido', id_curso=curso.id_curso) }}" method="post"
-                enctype="multipart/form-data">
+            <form id="formulario-agregar-contenido" action="{{ url_for('agregar_contenido', id_curso=curso.id_curso) }}" method="post">
                 <div>
                     <label for="titulo">Título del Contenido:</label>
                     <input type="text" id="titulo" name="titulo" required>
@@ -42,11 +41,11 @@
             </form>
 
             <!-- Lista de PDFs existentes -->
-            <h2>PDFs Existentes</h2>
-            <ul id="lista-pdfs">
-                <!-- Aquí se mostrarán los PDFs que ya se han subido -->
-                {% for pdf in curso.pdfs %}
-                <li><a href="{{ pdf.url }}" target="_blank">{{ pdf.titulo }}</a></li>
+            <h2>Contenidos Existentes</h2>
+            <ul id="lista-contenidos">
+                <!-- Aquí se mostrarán los contenidos que ya se han agregado -->
+                {% for contenido in curso.contenidos %}
+                <li>{{ contenido.titulo }} - {{ contenido.texto }}</li>
                 {% endfor %}
             </ul>
         </div>

@@ -248,15 +248,17 @@ def route(app): #toma objeto de app flask como argumento
 
   @app.route('/curso/<int:id_curso>/agregar_contenido', methods=['POST'])
   def agregar_contenido(id_curso):
-    titulo = request.form['titulo']
-    contenido = request.form['contenido']
+      titulo = request.form['titulo']
+      contenido = request.form['contenido']
 
-    # Aquí deberías agregar la lógica para guardar el título y el contenido en tu base de datos.
-    exito = guardar_contenido(id_curso, titulo, contenido)
-    if exito:
-        return jsonify({'mensaje': 'Contenido agregado con éxito', 'curso': id_curso})
-    else:
-        return jsonify({'error': 'Error al guardar en la base de datos'}), 500
+      exito = guardar_contenido(id_curso, titulo, contenido)
+      if exito:
+          flash('Contenido agregado con éxito')  
+          return redirect(url_for('detalle_curso', id_curso=id_curso))
+      else:
+          flash('Error al guardar en la base de datos', 'error')
+          return redirect(url_for('agregar_contenido', id_curso=id_curso))
+
 
     
 
