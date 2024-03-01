@@ -126,12 +126,101 @@ def cambiar_informacion(password, nombre_usuario, foto_ruta):
         print("No se pudo conectar a la base de datos")
         return False
     try:
-        cursor = conexion.cursor() #se utiliza para ejecutar consultas en bd
+        cursor = conexion.cursor() 
         cursor.execute("UPDATE usuario SET pass = %s, foto_perfil = %s WHERE nombre_usuario = %s", (password, foto_ruta, nombre_usuario))
+        conexion.commit() 
+        return True
+    except Error as e:
+        print(f"Error al insertar en MySQL: {e}")
+        return False
+    finally:
+        cerrar_conexion(cursor, conexion)
+
+def informacion_curso(id_profesor):
+    conexion = obtener_conexion()
+    if conexion is None:
+        return False
+    try:
+        cursor = conexion.cursor()
+        cursor.execute("SELECT id_curso, nombre_curso, foto_curso FROM curso WHERE id_profesor = %s", (id_profesor,)) 
+        curso = cursor.fetchall() 
+        if curso:
+            return curso
+        else:
+            return None #no hay coincidencias
+    finally:
+        cerrar_conexion(cursor, conexion)
+
+def obtener_curso_por_id(id_curso):
+    conexion = obtener_conexion()
+    if conexion is None:
+        return False
+    try:
+        cursor = conexion.cursor()
+        cursor.execute("SELECT * FROM curso WHERE id_curso = %s", (id_curso,)) 
+        curso = cursor.fetchone()
+        if curso:
+            return curso
+        else:
+            return None #no hay coincidencias
+    finally:
+        cerrar_conexion(cursor, conexion)
+
+def buscar_cursos(id_alumno):
+    conexion = obtener_conexion()
+    if conexion is None:
+        return False
+    try:
+        cursor = conexion.cursor()
+        consulta_sql = """SELECT c.id_curso, c.nombre_curso, c.foto_curso 
+                          FROM curso c 
+                          WHERE c.id_curso 
+                          NOT IN (SELECT i.id_curso FROM inscripcion i 
+                          WHERE i.id_alumno = %s)"""
+        cursor.execute(consulta_sql, (id_alumno,))
+        cursos_no_inscriptos = cursor.fetchall()
+        return cursos_no_inscriptos
+    except Exception as e:
+        print(f"Ocurrió un error al obtener los cursos no inscritos: {e}")
+        return []
+    finally:
+        cerrar_conexion(cursor, conexion)
+
+
+def inscripcion_curso(id_alumno, id_curso):
+    conexion = obtener_conexion()
+    if conexion is None:
+        return False
+    try:
+        cursor = conexion.cursor()
+        query = "INSERT INTO inscripcion (id_alumno, id_curso) VALUES (%s, %s)"
+        valores = (id_alumno, id_curso)
+        cursor.execute(query, valores)
         conexion.commit()  # Asegúrate de hacer commit de la transacción
         return True
     except Error as e:
         print(f"Error al insertar en MySQL: {e}")
         return False
+    finally:
+        cerrar_conexion(cursor, conexion)
+
+def informacion_inscripcion(id_alumno):
+    conexion = obtener_conexion()
+    if conexion is None:
+        return False
+    try:
+        cursor = conexion.cursor()
+        consulta_sql = """ SELECT c.id_curso, c.nombre_curso, c.foto_curso 
+                       FROM curso c
+                       JOIN inscripcion i
+                       ON c.id_curso = i.id_curso
+                       WHERE i.id_alumno = %s
+                       """
+        cursor.execute(consulta_sql, (id_alumno,)) 
+        cursos = cursor.fetchall() 
+        return cursos if cursos else None
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
+        return None
     finally:
         cerrar_conexion(cursor, conexion)

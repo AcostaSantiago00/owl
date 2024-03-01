@@ -56,7 +56,7 @@ function actualizar_informacion(password, confirmPassword, fotoPerfil) {
                 // Aquí puedes manejar otros errores
                 // y usar una lógica similar para mostrar mensajes de error
             } else {
-                window.location.href = '/configuracion'; // Redirigir a la página de inicio
+                document.getElementById('vista-foto').src = response.nueva_foto;
             }
         }
     }

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Principal del Alumno - OWL</title>
     <link rel="stylesheet" href="../../static/styles/inicio-a.css"> <!-- Vincula tu archivo CSS aquí -->
 </head>
+
 <body>
     <div class="dashboard-container">
         <nav class="navbar">
@@ -17,17 +19,19 @@
         </nav>
 
         <!-- Sección de Cursos Inscritos -->
-        <section class="cursos-inscritos">
-            <h2>Cursos Inscritos</h2>
-            <div class="lista-cursos">
-                <!-- Lista o cuadrícula de cursos inscritos -->
-            </div>
-
-            <!-- Mensaje de No Inscripción -->
-            <div class="mensaje-no-inscripcion">
-                No estás inscrito en ningún curso actualmente.
-            </div>
-        </section>
+        <div id="cursos-inscriptos">
+            {% for curso in cursos_inscriptos %}
+            <a id="curso-{{ curso.id_curso }}" class="curso"
+                href="{{ url_for('detalle_curso', id_curso=curso.id_curso) }}">
+                <h3>{{ curso.nombre_curso }}</h3>
+                <div class="contenido-inferior">
+                    <img src="{{ curso.foto_curso }}" alt="Imagen del curso {{ curso.nombre_curso }}">
+                </div>
+            </a>
+            {% else %}
+            <p>No se encontraron cursos.</p>
+            {% endfor %}
+        </div>
 
         <!-- Sección de Calificaciones -->
         <section class="calificaciones">
@@ -40,12 +44,25 @@
         <!-- Sección de Ayuda y Soporte -->
         <section class="buscar-cursos">
             <h2>Buscar cursos</h2>
-            <div class="cursos">
-                <!-- Información de contacto y enlaces a recursos de ayuda -->
+            <div id="buscar-cursos">
+                {% for curso in cursos %}
+                <div id="curso-{{ curso.id_curso }}" class="curso" href="{{ url_for('detalle_curso', id_curso=curso.id_curso) }}">
+                    <h3>{{ curso.nombre_curso }}</h3>
+                    <div class="contenido-inferior">
+                        <img src="{{ curso.foto_curso }}" alt="Imagen del curso {{ curso.nombre_curso }}">
+                        <div class="submit-container">
+                            <input type="submit" class="inscripcion" value="Inscribirse"onclick="inscribir_a_curso('{{ curso.id_curso }}')">
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p>No se encontraron cursos.</p>
+                {% endfor %}
             </div>
         </section>
 
     </div>
     <script src="../../static/js/inicio-a.js"></script>
 </body>
+
 </html>

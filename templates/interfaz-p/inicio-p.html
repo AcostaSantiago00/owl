@@ -21,8 +21,17 @@
         <section class="gestion-cursos">
             <h2>Gestión de Cursos</h2>
 
-            <div class="mensaje-no-cursos">
-                No hay cursos creados hasta el momento.
+            <div id="lista-cursos">
+                {% for curso in cursos %}
+                <a class="curso" href="{{ url_for('detalle_curso', id_curso=curso.id_curso) }}">
+                    <h3>{{ curso.nombre_curso }}</h3>
+                    <div class="contenido-inferior">
+                        <img src="{{ curso.foto_curso }}" alt="Imagen del curso {{ curso.nombre_curso }}">
+                    </div>
+                </a>
+                {% else %}
+                <p>No se encontraron cursos.</p>
+                {% endfor %}
             </div>
             <button id="crear-curso">Crear Nuevo Curso</button>
             <!-- Formulario para crear nuevo curso, oculto inicialmente -->
