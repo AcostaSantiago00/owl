@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #ffffff; /* Color de fondo vainilla claro */
+    background-color: #ffffff;
     margin: 0;
     padding: 0;
 }
@@ -48,42 +48,101 @@ section {
 }
 
 .nav-link {
-    color: white;
-    text-decoration: none;
-    margin-right: 15px;
-    padding: 8px;
+    padding: 8px 15px;
+    border: none;
     border-radius: 4px;
-    background-color: #5cb85c; /* O el color que prefieras */
+    background-color: rgba(59, 130, 246, .5);
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+    text-decoration: none;
 }
 
 .nav-link:hover {
-    background-color: #4cae4c; /* Un tono más oscuro para el efecto hover */
+    background-color: rgba(109, 160, 246, .5);
 }
 
 #logout-button {
     padding: 8px 15px;
     border: none;
     border-radius: 4px;
-    background-color: #d9534f; /* O el color que prefieras */
+    background-color: #d9534f;
     color: white;
     cursor: pointer;
 }
 
 #logout-button:hover {
-    background-color: #c9302c; /* Un tono más oscuro para el efecto hover */
+    background-color: #c9302c; 
 }
 
-/* Media query para pantallas de tamaño medio, por ejemplo, tablets */
+/*tablets */
 @media (max-width: 768px) {
     .curso {
         width: calc(40% - 20px);
     }
 }
 
-/* Media query para pantallas pequeñas, por ejemplo, teléfonos móviles */
+/*pantallas pequeñas*/
 @media (max-width: 600px) {
     .curso {
         width: calc(100% - 20px);
     }
 }
 
+body {
+    font-family: Arial, sans-serif;
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+h1, h2 {
+    color: #333;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+input[type="text"],
+input[type="file"],
+button,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegura que padding no afecte el ancho total */
+}
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #4cae4c;
+}
+.lista-pdfs {
+    list-style-type: none;
+    padding: 0;
+}
+.lista-pdfs li {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    margin-top: -1px; /* Elimina el espacio entre los items de la lista */
+}
+.lista-pdfs li a {
+    text-decoration: none;
+    color: #337ab7;
+    display: block;
+}
+.lista-pdfs li a:hover {
+    background-color: #e7e7e7;
+}

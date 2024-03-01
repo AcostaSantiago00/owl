@@ -43,5 +43,6 @@ CREATE TABLE contenido(
     CONSTRAINT id_curso_fk
     FOREIGN KEY(id_cur)
     REFERENCES curso(id_curso),
-    contenido VARCHAR(100)
+    titulo_contenido VARCHAR(100),
+    contenido VARCHAR(255)
 );

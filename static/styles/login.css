@@ -2,37 +2,33 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #ffffff;
-    color: #333; /* Color gris oscuro para el texto */
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-/* Estilos del contenedor principal */
 .login-container {
-    background-color: #ffffff; /* Blanco para el fondo del contenedor */
+    background-color: #ffffff; 
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos del título */
 #login-title {
     text-align: center;
-    color: #333; /* Gris oscuro para el título */
+    color: #333; 
 }
 
-/* Estilos de los grupos de formulario */
 .form-group {
     margin-bottom: 15px;
 }
 
-/* Estilos de los campos de entrada */
 .form-control {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc; /* Gris claro para los bordes */
+    border: 1px solid #ccc; 
     border-radius: 4px;
     box-sizing: border-box;
 }
@@ -41,7 +37,6 @@ input[type='text'], input[type='password'] {
     border: 1px solid rgba(59, 130, 246, .5);
 }
 
-/* Estilos del botón de inicio de sesión */
 .btn-primary {
     width: 100%;
     padding: 10px;
@@ -53,10 +48,9 @@ input[type='text'], input[type='password'] {
 }
 
 .btn-primary:hover {
-    background-color: rgba(109, 160, 246, .5); /* Un tono más claro para el hover */
+    background-color: rgba(109, 160, 246, .5); 
 }
 
-/* Estilos de los enlaces de ayuda */
 .link {
     display: block;
     text-align: center;
@@ -70,10 +64,10 @@ input[type='text'], input[type='password'] {
 }
 
 .error {
-    color: red;
     display: none;
 }
 
 .error-active {
+    color: red;
     display: block;
 }

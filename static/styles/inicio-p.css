@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #ffffff; /* Color de fondo vainilla claro */
+    background-color: #ffffff;
     margin: 0;
     padding: 0;
 }
@@ -29,24 +29,24 @@ body {
     margin-right: 15px;
     padding: 8px;
     border-radius: 4px;
-    background-color: rgb(59 130 246 / .5); /* O el color que prefieras */
+    background-color: rgb(59 130 246 / .5);
 }
 
 .nav-link:hover {
-    background-color: rgba(109, 160, 246, .5); /* Un tono más oscuro para el efecto hover */
+    background-color: rgba(109, 160, 246, .5);
 }
 
 #logout-button {
     padding: 8px 15px;
     border: none;
     border-radius: 4px;
-    background-color: #d9534f; /* O el color que prefieras */
+    background-color: #d9534f; 
     color: white;
     cursor: pointer;
 }
 
 #logout-button:hover {
-    background-color: #c9302c; /* Un tono más oscuro para el efecto hover */
+    background-color: #c9302c; 
 }
 
 .profesor-dashboard {
@@ -77,12 +77,10 @@ body {
     display: block;
 }
 
-/* Estilos para las secciones individuales */
 section {
     margin-top: 20px;
 }
 
-/* Estilos para botones y herramientas interactivas */
 button {
     padding: 10px;
     margin-top: 10px;
@@ -103,7 +101,11 @@ form{
     flex-direction: column;
 }
 
-input{
+input {
+    margin-bottom: 5px;
+}
+
+table input{
     border: none;
     text-align: center;
 }
@@ -157,8 +159,7 @@ form button{
 .contenido-inferior {
     display: flex;
     flex-grow: 1;
-    width: 100%; /* Esto asegura que el contenido inferior ocupe todo el ancho */
-    /* Asegúrate de que no haya padding o margen interno que pueda estar causando problemas */
+    width: 100%;
 }
 
 .tareas-evaluaciones {
@@ -203,15 +204,12 @@ form button{
     background-color: #f1f1f1;
 }
 
-
-/* Media query para pantallas de tamaño medio, por ejemplo, tablets */
 @media (max-width: 768px) {
     .curso {
         width: calc(40% - 20px);
     }
 }
 
-/* Media query para pantallas pequeñas, por ejemplo, teléfonos móviles */
 @media (max-width: 600px) {
     .curso {
         width: calc(100% - 20px);

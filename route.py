@@ -11,7 +11,7 @@ url_for: generar URLs para una funcion especifica
 from _mysql_db import(
   iniciar_sesion, obtener_conexion, usuario_existe, registrar_usuario, reestablecer_usuario, cargar_curso, cambiar_informacion, cambiar_contrasena,
   informacion_curso, obtener_curso_por_id, buscar_cursos, inscripcion_curso, informacion_inscripcion, obtener_alumnos_inscritos, actualizar_notas_en_db,
-  obtener_calificaciones_alumno
+  obtener_calificaciones_alumno, guardar_contenido
 ) #importa funcion del modulo personalizado
 
 from werkzeug.utils import secure_filename #para asegurar un nombre de arch que no afecte al sistema de archivos del servidor
@@ -211,8 +211,9 @@ def route(app): #toma objeto de app flask como argumento
 
   @app.route('/curso/<int:id_curso>')
   def detalle_curso(id_curso):
-    curso = obtener_curso_por_id(id_curso)
-    if curso:
+    curso_data = obtener_curso_por_id(id_curso)
+    if curso_data:
+      curso = {'id_curso': curso_data[0], 'nombre_curso': curso_data[1], 'descripcion_curso': curso_data[2], 'foto_curso': curso_data[3], 'id_profesor': curso_data[4]}
       return render_template('interfaz-p/curso.html', curso=curso)
     else:
       return "Curso no encontrado", 404
@@ -234,3 +235,28 @@ def route(app): #toma objeto de app flask como argumento
     calificaciones = obtener_calificaciones_alumno(session['user']['id'], id_curso)
     print(calificaciones)
     return jsonify(calificaciones)
+  
+  @app.route("/interfaz")
+  def interfaz():
+    if 'user' not in session:
+      return redirect(url_for('home'))
+    elif session['user']['rol'] == 'alumno':
+      return redirect(url_for('interfaz_alumno'))
+    else:
+      return redirect(url_for('interfaz_profesor'))
+    
+
+  @app.route('/curso/<int:id_curso>/agregar_contenido', methods=['POST'])
+  def agregar_contenido(id_curso):
+    titulo = request.form['titulo']
+    contenido = request.form['contenido']
+
+    # Aquí deberías agregar la lógica para guardar el título y el contenido en tu base de datos.
+    exito = guardar_contenido(id_curso, titulo, contenido)
+    if exito:
+        return jsonify({'mensaje': 'Contenido agregado con éxito', 'curso': id_curso})
+    else:
+        return jsonify({'error': 'Error al guardar en la base de datos'}), 500
+
+    
+

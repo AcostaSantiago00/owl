@@ -301,3 +301,42 @@ def obtener_calificaciones_alumno(id_alumno, id_curso):
         return []
     finally:
         conexion.close()
+
+def obtener_detalles_curso(id_curso):
+    conexion = obtener_conexion()
+    if conexion is None:
+        return None
+
+    try:
+        with conexion.cursor() as cursor:
+            consulta_sql = "SELECT * FROM cursos WHERE id_curso = %s;"
+            cursor.execute(consulta_sql, (id_curso,))
+            detalles_curso = cursor.fetchone()
+            print(detalles_curso)
+            return detalles_curso
+    except Exception as e:
+        print(f"Ocurrió un error al obtener los detalles del curso: {e}")
+        return None
+    finally:
+        conexion.close()
+
+def guardar_contenido(id_curso, titulo, contenido):
+    conexion = obtener_conexion()
+    if conexion is None:
+        return False
+
+    try:
+        with conexion.cursor() as cursor:
+            consulta_sql = """
+            INSERT INTO contenido (id_cur, titulo_contenido, contenido)
+            VALUES (%s, %s, %s);
+            """
+            cursor.execute(consulta_sql, (id_curso, titulo, contenido))
+            conexion.commit()
+            return True
+    except Exception as e:
+        print(f"Ocurrió un error al guardar el contenido: {e}")
+        return False
+    finally:
+        if conexion:
+            conexion.close()

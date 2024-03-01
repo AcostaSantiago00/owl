@@ -1,7 +1,6 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #ffffff;
-    /* Color de fondo vainilla claro */
     margin: 0;
     padding: 0;
 }
@@ -11,7 +10,6 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #333;
-    /* O el color que prefieras */
     color: white;
     padding: 10px 20px;
 }
@@ -37,7 +35,6 @@ body {
 
 .nav-link:hover {
     background-color: rgba(109, 160, 246, .5);
-    /* Un tono más oscuro para el efecto hover */
 }
 
 #logout-button {
@@ -45,14 +42,12 @@ body {
     border: none;
     border-radius: 4px;
     background-color: #d9534f;
-    /* O el color que prefieras */
     color: white;
     cursor: pointer;
 }
 
 #logout-button:hover {
     background-color: #c9302c;
-    /* Un tono más oscuro para el efecto hover */
 }
 
 .config-container {
@@ -75,14 +70,10 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: 100px;
-    /* O el tamaño que prefieras */
     height: 100px;
-    /* Asegúrate de que sea el mismo que el ancho para un círculo perfecto */
     border-radius: 50%;
     border: 2px solid rgba(59, 130, 246, .5);
-    /* Opcional: un borde para la foto de perfil */
     margin-bottom: 15px;
-    /* Espacio debajo de la imagen */
 }
 
 .inputFile {
@@ -90,7 +81,7 @@ body {
     margin: 0 auto;
 }
 
-/* Estilos para los formularios y campos de entrada */
+/* Estilos formularios y campos de entrada */
 form {
     text-align: center;
     margin-top: 15px;

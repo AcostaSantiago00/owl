@@ -10,27 +10,46 @@
 <body>
     <div class="dashboard-container">
         <nav class="navbar">
-            <span class="navbar-brand">Bienvenido a OWL</span>
+            <span class="navbar-brand">{{ curso.nombre_curso }}</span>
             <div class="navbar-controls">
-                <a href="{{ url_for('configuracion') }}" class="nav-link">Configuración de Cuenta</a>
+                <a href="{{ url_for('interfaz') }}" class="nav-link">Volver al inicio</a>
                 <button id="logout-button">Cerrar Sesión</button>
             </div>
         </nav>
 
-        <div id="cursos-inscriptos">
+        <div class="curso-info">
+            <h3>Descripcion del curso:</h3>
+            <p>{{ curso.descripcion_curso }}</p>
         </div>
 
-        <section class="calificaciones">
-            <h2>Calificaciones</h2>
+        <div class="container">
+            <h1>Agregar Contenido al Curso: {{ curso.nombre_curso }}</h1>
+
+            <!-- Formulario para agregar un nuevo título y PDFs -->
+            <form action="{{ url_for('agregar_contenido', id_curso=curso.id_curso) }}" method="post"
+                enctype="multipart/form-data">
+                <div>
+                    <label for="titulo">Título del Contenido:</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                </div>
+            
+                <div>
+                    <label for="contenido">Contenido:</label>
+                    <textarea id="contenido" name="contenido" required></textarea>
+                </div>
+            
+                <button type="submit">Agregar Contenido</button>
             </form>
 
-            <div id="tabla-calificaciones">
-            </div>
-        </section>
-
-        <section class="buscar-cursos">
-            <h2>Buscar cursos</h2>
-        </section>
+            <!-- Lista de PDFs existentes -->
+            <h2>PDFs Existentes</h2>
+            <ul id="lista-pdfs">
+                <!-- Aquí se mostrarán los PDFs que ya se han subido -->
+                {% for pdf in curso.pdfs %}
+                <li><a href="{{ pdf.url }}" target="_blank">{{ pdf.titulo }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
 
     </div>
     <script src="../../static/js/curso.js"></script>
